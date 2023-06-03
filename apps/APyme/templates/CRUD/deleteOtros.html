@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="col-md-8 container">
+        <!-- general form elements -->
+        <div class="card card-primary">
+            <div class="card-header">
+                <h3 class="card-title">Eliminar {{ header }}</h3>
+            </div>
+            {% if form.non_field_errors %}
+                <div class="alert alert-danger alert-dismissible w-75 container mt-2">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <h5><i class="icon fas fa-ban"></i> Error!</h5>
+                    {% for error in form.non_field_errors %}
+                        {{ error }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+            <!-- /.card-header -->
+            <!-- form start -->
+            <form method="post" action="">
+                {% csrf_token %}
+
+                <div class="alert alert-danger alert-dismissible mt-4 container w-75">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <h5><i class="icon fas fa-ban"></i> Notificación!</h5>
+                    Está seguro que desea eliminar el {{ header }} {{ object }} ?
+                </div>
+                <div class="card-footer text-center">
+                    <button type="submit" class="btn btn-primary">Si, aceptar</button>
+                    <a href="{{ succes_url }}" type="submit" class="btn btn-info">Cancelar</a>
+                </div>
+            </form>
+        </div>
+        <!-- /.card -->
+    </div>
+{% endblock %}

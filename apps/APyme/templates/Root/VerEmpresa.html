@@ -1,0 +1,480 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show w-75 container" role="alert">
+                    {{ message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+
+
+    <div class="col-12">
+        <div class="card card-primary card-tabs">
+            <div class="card-header p-0 pt-1">
+                <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
+                    <li class="pt-2 px-3"><h3 class="card-title">{{ object }}</h3></li>
+                    <li class="nav-item">
+                        <a class="nav-link active" id="custom-tabs-two-home-tab" data-toggle="pill"
+                           href="#custom-tabs-two-home" role="tab" aria-controls="custom-tabs-two-home"
+                           aria-selected="true">Alarmas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="custom-tabs-two-profile-tab" data-toggle="pill"
+                           href="#custom-tabs-two-profile" role="tab" aria-controls="custom-tabs-two-profile"
+                           aria-selected="false">Información</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="custom-tabs-two-messages-tab" data-toggle="pill"
+                           href="#custom-tabs-two-messages" role="tab" aria-controls="custom-tabs-two-messages"
+                           aria-selected="false">Almacén</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="custom-tabs-two-settings-tab" data-toggle="pill"
+                           href="#custom-tabs-two-settings" role="tab" aria-controls="custom-tabs-two-settings"
+                           aria-selected="false">Buscando</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="card-body">
+                <div class="tab-content" id="custom-tabs-two-tabContent">
+                    {#Alarmas#}
+                    <div class="tab-pane fade show active" id="custom-tabs-two-home" role="tabpanel"
+                         aria-labelledby="custom-tabs-two-home-tab">
+
+                        <div class="card-body pb-0">
+                            <div class="row">
+                                {% for i in object.empresa_buscando.all %}
+                                    <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch  flex-column">
+                                        <div class="card bg-gradient-navy d-flex flex-fill">
+                                            <div class="card-header border-bottom-0">
+                                                <a href="{% url 'DeleteAlarma' i.id %}" type="button"
+                                                   class="close bg-danger btn-danger btn float-right">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </a>
+                                                <h5 class="lead">{{ i.user.username }}</h5>
+                                            </div>
+                                            <div class="card-body  pt-0">
+                                                <div class="row">
+                                                    <div class="col-7">
+                                                        <h6><b>{{ i.user.email }}</b></h6>
+                                                        <p class="text-muted text-sm"><b>Productos coincidentes:</b></p>
+                                                        <ul class="ml-4 mb-0 fa-ul text-muted">
+                                                            {% for p in i.almacenes.all %}
+                                                                <li class="small"><span class="fa-li"><i
+                                                                        class="fas fa- fa-circle"></i></span>{{ p }}
+                                                                </li>
+                                                            {% endfor %}
+
+                                                        </ul>
+                                                    </div>
+                                                    <div class="col-5 text-center">
+                                                        <img src="{{ i.user.profile.get_logo }}" alt="user-avatar"
+                                                             class="img-circle img-fluid">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card-footer">
+                                                <div class="text-right">
+                                                    <a href="{% url 'DetailsEmpresa' i.user.pk %}"
+                                                       class="btn btn-sm btn-primary">
+                                                        <i class="fas fa-user"></i> Ver Empresa
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                    </div>
+                    {#Informacion#}
+                    <div class="tab-pane fade" id="custom-tabs-two-profile" role="tabpanel"
+                         aria-labelledby="custom-tabs-two-profile-tab">
+
+                        <div class="row">
+                            {#principal#}
+                            <div class="col-lg-6 col-md-6  container-fluid">
+                                <!-- Widget: user widget style 2 -->
+                                <div class="card card-widget widget-user-2">
+                                    <!-- Add the bg color to the header using any of the bg-* classes -->
+                                    <div class="widget-user-header bg-lightblue">
+                                        <div class="widget-user-image">
+                                            <img class="img-circle elevation-2 bg-dark"
+                                                 src="{{ user.profile.get_logo }}" alt="User Avatar">
+                                        </div>
+                                        <!-- /.widget-user-image -->
+
+                                        <a href="{% url 'user_changeRoot' object.pk %}"
+                                           class="btn btn-warning float-right"><i
+                                                class="fa fa-edit"></i>
+                                            Editar
+                                            datos</a>
+                                        <h3 class="widget-user-username">{{ object.username }}</h3>
+                                        <h5 class="widget-user-desc">{{ object.email }}</h5>
+
+
+                                    </div>
+                                    <div class="card-footer p-0">
+                                        <ul class="nav flex-column">
+                                            <li class="nav-item">
+                                                <a href="#telefonos" class="nav-link">
+                                                    Teléfonos <span
+                                                        class="float-right badge bg-primary">{{ telefonos.count }}</span>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="#WhatsApps" class="nav-link">
+                                                    WhatsApp <span
+                                                        class="float-right badge bg-success">{{ whats.count }}</span>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="#Socios" class="nav-link">
+                                                    Nombres de los socios <span
+                                                        class="float-right badge bg-danger">{{ socios.count }}</span>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="#Domicilios" class="nav-link">
+                                                    Domicilios sociales <span
+                                                        class="float-right badge bg-info">{{ domicilios.count }}</span>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="#Correo" class="nav-link">
+                                                    Emails <span
+                                                        class="float-right badge bg-dark">{{ emails.count }}</span>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="#Sitios" class="nav-link">
+                                                    Sitios webs <span
+                                                        class="float-right badge bg-gray">{{ webs.count }}</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!-- /.widget-user -->
+                            </div>
+                            {#bio#}
+                            {% if user.profile.bio %}
+                                <div class="col-lg-6 col-md-6 container-fluid overflow-auto">
+                                    <!-- Widget: user widget style 2 -->
+                                    <div class="card card-default">
+                                        <div class="card-header bg-info">
+                                            <h3 class="card-title">
+                                                <i class="fa fa-sticky-note" aria-hidden="true"></i>
+                                                Descripción
+                                            </h3>
+                                        </div>
+                                        <!-- /.card-header -->
+                                        <div class="card-body">
+                                            <div class="callout callout-info">
+                                                <div class="">{{ user.profile.bio }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- /.card-body -->
+                                </div>
+                                <!-- /.card -->
+                            {% endif %}
+
+                        </div>
+                        {#    otros#}
+                        <div class="row pb-4 container-fluid">
+                            <div class="col-lg-4 col-md-4 col-sm-6 " id="telefonos">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="card-title">
+                                            <i class="fas fa-phone"></i>
+                                            Teléfonos
+                                        </h3>
+                                        <a href="{% url 'CreateTelefono' %}"
+                                           class="btn btn-xs btn-outline-primary float-right"><i
+                                                class="fa fa-plus"></i></a>
+                                    </div>
+                                    <!-- /.card-header -->
+                                    <div class="card-body">
+                                        <ul>
+                                            {% for t in telefonos %}
+                                                <li class="mb-1">{{ t }} <a href="{% url 'DeleteTelefono' t.pk %}"
+                                                                            class="btn btn-xs btn-outline-danger float-right"><i
+                                                        class="fa fa-trash-alt"></i></a></li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                    <!-- /.card-body -->
+                                </div>
+                                <!-- /.card -->
+                            </div>
+
+                            <div class="col-lg-4 col-md-4 col-sm-6" id="WhatsApps">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="card-title">
+                                            <i class="fa fa-comment" aria-hidden="true"></i>
+                                            WhatsApps
+                                        </h3>
+                                        <a href="{% url 'CreateWhastapp' %}"
+                                           class="btn btn-xs btn-outline-primary float-right"><i
+                                                class="fa fa-plus"></i></a>
+                                    </div>
+                                    <!-- /.card-header -->
+                                    <div class="card-body">
+                                        <ul>
+                                            {% for w in whats %}
+                                                <li class="mb-1"><a
+                                                        href="Https://wa.me/{{ w }}">Https://wa.me/{{ w }}</a> <a
+                                                        href="{% url 'DeleteWhastapp' w.pk %}"
+                                                        class="btn btn-xs btn-outline-danger float-right"><i
+                                                        class="fa fa-trash-alt"></i></a></li>
+
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                    <!-- /.card-body -->
+                                </div>
+                                <!-- /.card -->
+                            </div>
+
+                            <div class="col-lg-4 col-md-4 col-sm-6" id="Socios">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="card-title">
+                                            <i class="fa fa-handshake" aria-hidden="true"></i>
+                                            Nombres de los socios
+                                        </h3>
+                                        <a href="{% url 'CreateSocio' %}"
+                                           class="btn btn-xs btn-outline-primary float-right"><i
+                                                class="fa fa-plus"></i></a>
+                                    </div>
+                                    <!-- /.card-header -->
+                                    <div class="card-body">
+                                        <ul>
+                                            {% for s in socios %}
+                                                <li class="mb-1">{{ s }} <a href="{% url 'DeleteSocio' s.pk %}"
+                                                                            class="btn btn-xs btn-outline-danger float-right"><i
+                                                        class="fa fa-trash-alt"></i></a></li>
+
+                                            {% endfor %}
+
+                                        </ul>
+                                    </div>
+                                    <!-- /.card-body -->
+                                </div>
+                                <!-- /.card -->
+                            </div>
+
+                            <div class="col-lg-4 col-md-4 col-sm-6" id="Domicilios">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="card-title">
+                                            <i class="fa fa-home" aria-hidden="true"></i>
+                                            Domicilios sociales
+                                        </h3>
+                                        <a href="{% url 'CreateDomicilios' %}"
+                                           class="btn btn-xs btn-outline-primary float-right"><i
+                                                class="fa fa-plus"></i></a>
+                                    </div>
+                                    <!-- /.card-header -->
+                                    <div class="card-body">
+                                        <ul>
+                                            {% for d in domicilios %}
+                                                <li class="mb-1">{{ d }} <a href="{% url 'DeleteDomicilios' d.pk %}"
+                                                                            class="btn btn-xs btn-outline-danger float-right"><i
+                                                        class="fa fa-trash-alt"></i></a></li>
+
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                    <!-- /.card-body -->
+                                </div>
+                                <!-- /.card -->
+                            </div>
+
+                            <div class="col-lg-4 col-md-4 col-sm-6" id="Correo">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="card-title">
+                                            <i class="fas fa-envelope"></i>
+                                            Correo
+                                        </h3>
+                                        <a href="{% url 'CreateCorreo' %}"
+                                           class="btn btn-xs btn-outline-primary float-right"><i
+                                                class="fa fa-plus"></i></a>
+                                    </div>
+                                    <!-- /.card-header -->
+                                    <div class="card-body">
+                                        <ul>
+                                            {% for c in emails %}
+                                                <li class="mb-1">{{ c }} <a href="{% url 'DeleteCorreo' c.pk %}"
+                                                                            class="btn btn-xs btn-outline-danger float-right"><i
+                                                        class="fa fa-trash-alt"></i></a></li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                    <!-- /.card-body -->
+                                </div>
+                                <!-- /.card -->
+                            </div>
+
+                            <div class="col-lg-4 col-md-4 col-sm-6" id="Sitios">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="card-title">
+                                            <i class="fa fa-rss" aria-hidden="true"></i>
+                                            Sitios web
+                                        </h3>
+                                        <a href="{% url 'CreateSitios' %}"
+                                           class="btn btn-xs btn-outline-primary float-right"><i
+                                                class="fa fa-plus"></i></a>
+                                    </div>
+                                    <!-- /.card-header -->
+                                    <div class="card-body">
+                                        <ul>
+                                            {% for w in webs %}
+                                                <li class="mb-1">{{ w }} <a href="{% url 'DeleteSitios' w.pk %}"
+                                                                            class="btn btn-xs btn-outline-danger float-right"><i
+                                                        class="fa fa-trash-alt"></i></a></li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                    <!-- /.card-body -->
+                                </div>
+                                <!-- /.card -->
+                            </div>
+                        </div>
+
+
+                    </div>
+                    {#Almacen#}
+                    <div class="tab-pane fade" id="custom-tabs-two-messages" role="tabpanel"
+                         aria-labelledby="custom-tabs-two-messages-tab">
+
+                        <div class="col-md-10 container">
+                            <div class="card card-default">
+                                <div class="card-header">
+                                    <h3 class="card-title">
+                                        <i class="fas fa-archive"></i>
+                                        Productos en Almacén
+                                    </h3>
+                                    <a value="asd" href="{% url 'CreateAlmacenRoot' object.pk %}"
+                                       class="btn btn-primary btn-sm float-right"><i
+                                            class="fa fa-plus"></i>
+                                        Añadir producto</a>
+                                </div>
+                                <!-- /.card-header -->
+                                <div class="card-body">
+                                    <table class="table table-active">
+                                        <thead>
+                                        <tr>
+
+
+                                            <th scope="col">Producto</th>
+                                            <th scope="col">Cantidad</th>
+                                            <th scope="col">Precio</th>
+                                            <th scope="col">Opciones</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for f in object.usuario_almacen.all %}
+                                            <tr>
+                                                <td> {{ f.producto }}</td>
+                                                <td> {{ f.cantidad }}</td>
+                                                <td> {{ f.precio }}</td>
+                                                <td>
+                                                    <a href="{% url 'EditAlmacenRoot' f.id object.pk %}"
+                                                       class="btn btn-warning btn-xs"><i
+                                                            class="fa fa-edit"></i></a>
+                                                    <a href="{% url 'DeleteAlmacen' f.id %}?user={{ object.pk }} "
+                                                       class="btn btn-danger btn-xs"><i
+                                                            class="fa fa-trash-alt"></i></a>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- /.card-body -->
+                            </div>
+                            <!-- /.card -->
+                        </div>
+
+                    </div>
+                    {#Buscando#}
+                    <div class="tab-pane fade" id="custom-tabs-two-settings" role="tabpanel"
+                         aria-labelledby="custom-tabs-two-settings-tab">
+
+                        <div class="col-md-10 container">
+                            <div class="card card-default  bg-gray">
+                                <div class="card-header">
+                                    <h3 class="card-title">
+                                        <i class="fas fa-search"></i>
+                                        Productos en Buscando
+                                    </h3>
+
+                                    <a href="{% url 'CreateBuscandoRoot' object.pk %}"
+                                       class="btn btn-primary btn-sm float-right"><i
+                                            class="fa fa-plus"></i>
+                                        Añadir producto</a>
+                                </div>
+                                <!-- /.card-header -->
+                                <div class="card-body">
+                                    <table class="table table-active">
+                                        <thead>
+                                        <tr>
+
+
+                                            <th scope="col">Producto</th>
+                                            <th scope="col">Cantidad</th>
+                                            <th scope="col">Precio</th>
+                                            <th scope="col">Opciones</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for f in object.usuario_buscando.all %}
+                                            <tr>
+                                                <td> {{ f.producto }}</td>
+                                                <td> {{ f.cantidad }}</td>
+                                                <td> {{ f.precio }}</td>
+                                                <td>
+                                                    <a href="{% url 'EditBuscandoRoot' f.id object.pk %}"
+                                                       class="btn btn-warning btn-xs"><i
+                                                            class="fa fa-edit"></i></a>
+                                                    <a href="{% url 'DeleteBuscando' f.id %}"
+                                                       class="btn btn-danger btn-xs"><i
+                                                            class="fa fa-trash-alt"></i></a>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- /.card-body -->
+                            </div>
+                            <!-- /.card -->
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- /.card -->
+        </div>
+    </div>
+
+{% endblock %}
+

@@ -1,0 +1,264 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show w-75 container" role="alert">
+                    {{ message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+
+    <div class="row">
+        {#principal#}
+        <div class="col-lg-6 col-md-6  container-fluid">
+            <!-- Widget: user widget style 2 -->
+            <div class="card card-widget widget-user-2">
+                <!-- Add the bg color to the header using any of the bg-* classes -->
+                <div class="widget-user-header bg-lightblue">
+                    <div class="widget-user-image">
+                        <img class="img-circle elevation-2 bg-dark" src="{{ user.profile.get_logo }}" alt="User Avatar">
+                    </div>
+                    <!-- /.widget-user-image -->
+
+                    <a href="{% url 'user_change' %}" class="btn btn-warning float-right"><i class="fa fa-edit"></i>
+                        Editar
+                        datos</a>
+                    <h3 class="widget-user-username">{{ request.user.username }}</h3>
+                    <h5 class="widget-user-desc">{{ request.user.email }}</h5>
+
+
+                </div>
+                <div class="card-footer p-0">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a href="#telefonos" class="nav-link">
+                                Teléfonos <span class="float-right badge bg-primary">{{ telefonos.count }}</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#WhatsApps" class="nav-link">
+                                WhatsApp <span class="float-right badge bg-success">{{ whats.count }}</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#Socios" class="nav-link">
+                                Nombres de los socios <span
+                                    class="float-right badge bg-danger">{{ socios.count }}</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#Domicilios" class="nav-link">
+                                Domicilios sociales <span
+                                    class="float-right badge bg-info">{{ domicilios.count }}</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#Correo" class="nav-link">
+                                Emails <span class="float-right badge bg-dark">{{ emails.count }}</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#Sitios" class="nav-link">
+                                Sitios webs <span class="float-right badge bg-gray">{{ webs.count }}</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- /.widget-user -->
+        </div>
+        {#bio#}
+        {% if user.profile.bio %}
+            <div class="col-lg-6 col-md-6 container-fluid overflow-auto">
+                <!-- Widget: user widget style 2 -->
+                <div class="card card-default">
+                    <div class="card-header bg-info">
+                        <h3 class="card-title">
+                            <i class="fa fa-sticky-note" aria-hidden="true"></i>
+                            Descripción
+                        </h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="callout callout-info">
+                            <div class="">{{ user.profile.bio }}</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+        {% endif %}
+
+    </div>
+    {#    otros#}
+    <div class="row pb-4 container-fluid">
+        <div class="col-lg-4 col-md-4 col-sm-6 " id="telefonos">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-phone"></i>
+                        Teléfonos
+                    </h3>
+                    <a href="{% url 'CreateTelefono' %}" class="btn btn-xs btn-outline-primary float-right"><i
+                            class="fa fa-plus"></i></a>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <ul>
+                        {% for t in telefonos %}
+                            <li class="mb-1">{{ t }} <a href="{% url 'DeleteTelefono' t.pk %}"
+                                                        class="btn btn-xs btn-outline-danger float-right"><i
+                                    class="fa fa-trash-alt"></i></a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+        </div>
+
+        <div class="col-lg-4 col-md-4 col-sm-6" id="WhatsApps">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fa fa-comment" aria-hidden="true"></i>
+                        WhatsApps
+                    </h3>
+                    <a href="{% url 'CreateWhastapp' %}" class="btn btn-xs btn-outline-primary float-right"><i
+                            class="fa fa-plus"></i></a>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <ul>
+                        {% for w in whats %}
+                            <li class="mb-1"><a href="Https://wa.me/{{ w }}">Https://wa.me/{{ w }}</a> <a
+                                    href="{% url 'DeleteWhastapp' w.pk %}"
+                                    class="btn btn-xs btn-outline-danger float-right"><i
+                                    class="fa fa-trash-alt"></i></a></li>
+
+                        {% endfor %}
+                    </ul>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+        </div>
+
+        <div class="col-lg-4 col-md-4 col-sm-6" id="Socios">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fa fa-handshake" aria-hidden="true"></i>
+                        Nombres de los socios
+                    </h3>
+                    <a href="{% url 'CreateSocio' %}" class="btn btn-xs btn-outline-primary float-right"><i
+                            class="fa fa-plus"></i></a>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <ul>
+                        {% for s in socios %}
+                            <li class="mb-1">{{ s }} <a href="{% url 'DeleteSocio' s.pk %}"
+                                                        class="btn btn-xs btn-outline-danger float-right"><i
+                                    class="fa fa-trash-alt"></i></a></li>
+
+                        {% endfor %}
+
+                    </ul>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+        </div>
+
+        <div class="col-lg-4 col-md-4 col-sm-6" id="Domicilios">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fa fa-home" aria-hidden="true"></i>
+                        Domicilios sociales
+                    </h3>
+                    <a href="{% url 'CreateDomicilios' %}" class="btn btn-xs btn-outline-primary float-right"><i
+                            class="fa fa-plus"></i></a>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <ul>
+                        {% for d in domicilios %}
+                            <li class="mb-1">{{ d }} <a href="{% url 'DeleteDomicilios' d.pk %}"
+                                                        class="btn btn-xs btn-outline-danger float-right"><i
+                                    class="fa fa-trash-alt"></i></a></li>
+
+                        {% endfor %}
+                    </ul>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+        </div>
+
+        <div class="col-lg-4 col-md-4 col-sm-6" id="Correo">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-envelope"></i>
+                        Correo
+                    </h3>
+                    <a href="{% url 'CreateCorreo' %}" class="btn btn-xs btn-outline-primary float-right"><i
+                            class="fa fa-plus"></i></a>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <ul>
+                        {% for c in emails %}
+                            <li class="mb-1">{{ c }} <a href="{% url 'DeleteCorreo' c.pk %}"
+                                                        class="btn btn-xs btn-outline-danger float-right"><i
+                                    class="fa fa-trash-alt"></i></a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+        </div>
+
+        <div class="col-lg-4 col-md-4 col-sm-6" id="Sitios">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fa fa-rss" aria-hidden="true"></i>
+                        Sitios web
+                    </h3>
+                    <a href="{% url 'CreateSitios' %}" class="btn btn-xs btn-outline-primary float-right"><i
+                            class="fa fa-plus"></i></a>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <ul>
+                        {% for w in webs %}
+                            <li class="mb-1">{{ w }} <a href="{% url 'DeleteSitios' w.pk %}"
+                                                        class="btn btn-xs btn-outline-danger float-right"><i
+                                    class="fa fa-trash-alt"></i></a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+        </div>
+    </div>
+
+
+
+
+
+{% endblock %}
+

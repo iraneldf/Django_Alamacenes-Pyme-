@@ -1,0 +1,183 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="card container">
+        <div class="card-header">
+            <h3 class="card-title">Buscar empresas</h3>
+            <form method="get" action=".">
+                <input type="hidden" value="clear_filter" name="clear_filter">
+                <button type="submit" class="float-right btn btn-sm bg-danger"><i
+                        class="fa fa-trash"></i></button>
+            </form>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body p-0">
+            <table class="table table-striped">
+                <form method="get" action="">
+                    <div class="card-body  pb-0">
+                        <div class="row">
+                            <label for="nombre">Nombre de Empresa: </label>
+                            <div class="col-xl-3 col-lg-5 col-md-6 col-sm-8">
+                                <input type="text" name="nombre" class="form-control"
+                                       placeholder="Entre el nombre de la empresa"
+                                        {% if  request.session.nombre %}
+                                       value="{{ request.session.nombre }}"{% endif %}>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-body pt-1 pb-0">
+                        <h5 class="h4"> Almacén: </h5>
+                        <div class="row">
+                            <div class="col-lg-3 col-md-3 col-sm-8">
+                                <label>Producto:</label>
+
+                                <input type="text" id="almacen_producto" name="almacen_producto" class="form-control"
+                                       placeholder="Producto de almacén"
+                                        {% if  request.session.almacen_producto %}
+                                       value="{{ request.session.almacen_producto }}"
+                                        {% endif %}>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-6 ">
+                                <label> Cantidad mínima: </label>
+                                <input id="almacen_cantidad" name="almacen_cantidad" type="number" class="form-control"
+                                       placeholder=".col-3"
+                                        {% if  request.session.almacen_cantidad %}
+                                       value="{{ request.session.almacen_cantidad }}"
+                                        {% endif %}
+                                        {% if not request.session.almacen_producto %}
+                                       disabled
+                                        {% endif %}
+                                >
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-6 ">
+                                <label> Precio máximo: </label>
+                                <input id="almacen_precio" name="almacen_precio" type="number" class="form-control"
+                                       placeholder=".col-3"
+                                        {% if  request.session.almacen_precio %}
+                                       value="{{ request.session.almacen_precio }}"
+                                        {% endif %}
+                                        {% if not request.session.almacen_producto %}
+                                       disabled
+                                        {% endif %}
+                                >
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="card-body pt-1 pb-0">
+                        <h5 class="h4"> Buscando: </h5>
+                        <div class="row">
+                            <div class="col-lg-3 col-md-3 col-sm-8 ">
+                                <label>Producto:</label>
+                                <input id="buscando_producto" type="text" name="buscando_producto" class="form-control"
+                                        {% if  request.session.buscando_producto %}
+                                       value="{{ request.session.buscando_producto }}"
+                                        {% endif %}
+                                       placeholder="Producto de buscando">
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-6 ">
+                                <label> Cantidad mínima: </label>
+                                <input id="buscando_cantidad" name="buscando_cantidad" type="number"
+                                       class="form-control" placeholder=".col-3"
+                                        {% if  request.session.buscando_cantidad %}
+                                       value="{{ request.session.buscando_cantidad }}"
+                                        {% endif %}
+                                        {% if not request.session.buscando_producto %}
+                                       disabled
+                                        {% endif %}
+                                >
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-6 ">
+                                <label> Precio máximo: </label>
+                                <input id="buscando_precio" name="buscando_precio" type="number" class="form-control"
+                                       placeholder=".col-3"
+                                        {% if  request.session.buscando_precio %}
+                                       value="{{ request.session.buscando_precio }}"
+                                        {% endif %}
+                                        {% if not request.session.buscando_producto %}
+                                       disabled
+                                        {% endif %}
+                                >
+
+                            </div>
+                            <div class="col-3">
+                                <br>
+                                <button class="btn btn-primary mt-2" type="submit"><i class="fa fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </form>
+                <thead>
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th>Nombre</th>
+                    <th>Correo</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                {% for e in object_list %}
+                    <tr>
+                        <td style="width: 15%">
+                            <a href="{% url 'DetailsRoot' e.pk %}" class="btn-sm btn btn-primary">Ver empresa</a>
+                        </td>
+                        <td style="width: 30%"><img src="{{ e.profile.get_logo }}" style="width: 15%"
+                                                    alt="Logo de empresa"
+                                                    class="brand-image img-circle elevation-3">
+                        </td>
+                        <td style="width: 30%">{{ e.username }}</td>
+                        <td style="width: 30%">
+                            {{ e.email }}
+                        </td>
+
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+            <!-- /.card-body -->
+        </div>
+    </div>
+
+    <script>
+        var almcenProducto = document.getElementById('almacen_producto')
+        var almcenCantidad = document.getElementById('almacen_cantidad')
+        var almcenPrecio = document.getElementById('almacen_precio')
+        var buscandoProducto = document.getElementById('buscando_producto')
+        var buscando_cantidad = document.getElementById('buscando_cantidad')
+        var buscando_precio = document.getElementById('buscando_precio')
+
+        almcenProducto.addEventListener('keyup', (e) => {
+            console.log(almcenProducto.value)
+            if (almcenProducto.value !== '') {
+                almcenCantidad.disabled = false;
+                almcenPrecio.disabled = false;
+            } else {
+                almcenCantidad.disabled = true;
+                almcenPrecio.disabled = true;
+                almcenCantidad.value = '';
+                almcenPrecio.value = '';
+            }
+        })
+
+        buscandoProducto.addEventListener('keyup', (e) => {
+            console.log(almcenProducto.value)
+            if (buscandoProducto.value !== '') {
+                buscando_cantidad.disabled = false;
+                buscando_precio.disabled = false;
+            } else {
+                buscando_cantidad.disabled = true;
+                buscando_precio.disabled = true;
+                buscando_cantidad.value = '';
+                buscando_precio.value = '';
+            }
+        })
+
+    </script>
+{% endblock %}

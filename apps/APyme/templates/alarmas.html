@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="card-body pb-0">
+        <div class="row">
+            {% for i in object_list %}
+                <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch  flex-column">
+                    <div class="card bg-gradient-navy d-flex flex-fill">
+                        <div class="card-header border-bottom-0">
+                            <a href="{% url 'DeleteAlarma' i.id %}" type="button"
+                               class="close bg-danger btn-danger btn float-right">
+                                <span aria-hidden="true">&times;</span>
+                            </a>
+                            <h5 class="lead">{{ i.user.username }}</h5>
+                        </div>
+                        <div class="card-body  pt-0">
+                            <div class="row">
+                                <div class="col-7">
+                                    <h6><b>{{ i.user.email }}</b></h6>
+                                    <p class="text-muted text-sm"><b>Productos coincidentes:</b></p>
+                                    <ul class="ml-4 mb-0 fa-ul text-muted">
+                                        {% for p in i.almacenes.all %}
+                                            <li class="small"><span class="fa-li"><i
+                                                    class="fas fa- fa-circle"></i></span>{{ p }}
+                                            </li>
+                                        {% endfor %}
+
+                                    </ul>
+                                </div>
+                                <div class="col-5 text-center">
+                                    <img src="{{ i.user.profile.get_logo }}" alt="user-avatar"
+                                         class="img-circle img-fluid">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="text-right">
+                                <a href="{% url 'DetailsEmpresa' i.user.pk %}" class="btn btn-sm btn-primary">
+                                    <i class="fas fa-user"></i> Ver Empresa
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}
+

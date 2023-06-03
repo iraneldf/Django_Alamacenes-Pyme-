@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="col-md-10 container">
+        <div class="card card-default">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <i class="fas fa-archive"></i>
+                    Productos en Almacén
+                </h3>
+                <a href="{% url 'CreateAlmacen' %}" class="btn btn-primary btn-sm float-right"><i
+                        class="fa fa-plus"></i>
+                    Añadir producto</a>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <table class="table table-active">
+                    <thead>
+                    <tr>
+
+
+                        <th scope="col">Producto</th>
+                        <th scope="col">Cantidad</th>
+                        <th scope="col">Precio</th>
+                        <th scope="col">Opciones</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for f in object_list %}
+                        <tr>
+                            <td> {{ f.producto }}</td>
+                            <td> {{ f.cantidad }}</td>
+                            <td> {{ f.precio }}</td>
+                            <td>
+                                <a href="{% url 'EditAlmacen' f.id %}" class="btn btn-warning btn-xs"><i
+                                        class="fa fa-edit"></i></a>
+                                <a href="{% url 'DeleteAlmacen' f.id %}" class="btn btn-danger btn-xs"><i
+                                        class="fa fa-trash-alt"></i></a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+
+
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+    </div>
+{% endblock %}
+

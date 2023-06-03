@@ -1,0 +1,100 @@
+{% load jazzmin %}
+{% load static %}
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="" class="brand-link">
+        <img src="/static/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+             style="opacity: .8">
+        <span class="brand-text font-weight-light">Almacenes Pyme</span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <!-- Sidebar user (optional) -->
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+            <div class="image">
+                <img src="{{ request.user.profile.get_logo }}" class="img-circle elevation-2" alt="User Image">
+            </div>
+            <div class="info">
+                <a href="#" class="d-block">{{ request.user.username }}</a>
+            </div>
+        </div>
+
+        {#                        <!-- SidebarSearch Form -->#}
+        {#                        <div class="form-inline">#}
+        {#                            <div class="input-group" data-widget="sidebar-search">#}
+        {#                                <input class="form-control form-control-sidebar" type="search" placeholder="Search"#}
+        {#                                       aria-label="Search">#}
+        {#                                <div class="input-group-append">#}
+        {#                                    <button class="btn btn-sidebar">#}
+        {#                                        <i class="fas fa-search fa-fw"></i>#}
+        {#                                    </button>#}
+        {#                                </div>#}
+        {#                            </div>#}
+        {#                        </div>#}
+
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                data-accordion="false">
+                <!-- Add icons to the links using the .nav-icon class
+                     with font-awesome or any other icon font library -->
+
+                <li class="nav-item">
+                    <a href="{% url 'alarmas' %}"
+                       class="nav-link {% if path == 'alarmas' %}active{% endif %}">
+                        <i class="fa fa-bell nav-icon"></i>
+                        <p>Alarmas</p>
+                        {% if alarmasC %}
+                            <span class="right badge badge-warning">{{ alarmasC.count }}</span>
+                        {% endif %}
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{% url 'informacion' %}"
+                       class="nav-link {% if path == 'informacion' %}active{% endif %}">
+                        <i class="fa fa-info  nav-icon"></i>
+                        <p>Información</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'almacen' %}"
+                       class="nav-link {% if path == 'almacen' %}active{% endif %} ">
+                        <i class="fa fa-archive nav-icon"></i>
+                        <p>Almacén</p>
+                        {% if almacenesC %}
+                            <span class="right badge badge-success">{{ almacenesC.count }}</span>
+                        {% endif %}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'buscando' %}"
+                       class="nav-link {% if path == 'buscando' %}active{% endif %}">
+                        <i class="fa fa-search nav-icon"></i>
+                        <p>Buscando</p>
+                        {% if buscandosC %}
+                            <span class="right badge badge-danger">{{ buscandosC.count }}</span>
+                        {% endif %}
+                    </a>
+                </li>
+
+
+                {% if request.user.is_superuser %}
+                    <li class="nav-item">
+                        <a href="{% url 'ListEmpresas' %}"
+                           class="nav-link {% if path == 'Root' or path == 'detallesRoot' %}active{% endif %}">
+                            <i class="fa fa-user-plus nav-icon"></i>
+                            <p>Root</p>
+                            {% if empresasC %}
+                                <span class="right badge  badge-secondary">{{ empresasC.count }}</span>
+                            {% endif %}
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+</aside>
