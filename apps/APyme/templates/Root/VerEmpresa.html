@@ -199,7 +199,7 @@
                                             <i class="fas fa-phone"></i>
                                             Teléfonos
                                         </h3>
-                                        <a href="{% url 'CreateTelefono' %}"
+                                        <a href="{% url 'CreateTelefonoRoot' user.pk %}"
                                            class="btn btn-xs btn-outline-primary float-right"><i
                                                 class="fa fa-plus"></i></a>
                                     </div>
@@ -207,9 +207,10 @@
                                     <div class="card-body">
                                         <ul>
                                             {% for t in telefonos %}
-                                                <li class="mb-1">{{ t }} <a href="{% url 'DeleteTelefono' t.pk %}"
-                                                                            class="btn btn-xs btn-outline-danger float-right"><i
-                                                        class="fa fa-trash-alt"></i></a></li>
+                                                <li class="mb-1">{{ t }} <a
+                                                        href="{% url 'DeleteTelefono' t.pk %}?user={{ object.pk }}"
+                                                        class="btn btn-xs btn-outline-danger float-right"><i
+                                                        class="fa fa-trash-alt"></i></a></li><br>
                                             {% endfor %}
                                         </ul>
                                     </div>
@@ -225,7 +226,7 @@
                                             <i class="fa fa-comment" aria-hidden="true"></i>
                                             WhatsApps
                                         </h3>
-                                        <a href="{% url 'CreateWhastapp' %}"
+                                        <a href="{% url 'CreateWhastappRoot' user.pk %}"
                                            class="btn btn-xs btn-outline-primary float-right"><i
                                                 class="fa fa-plus"></i></a>
                                     </div>
@@ -234,10 +235,11 @@
                                         <ul>
                                             {% for w in whats %}
                                                 <li class="mb-1"><a
-                                                        href="Https://wa.me/{{ w }}">Https://wa.me/{{ w }}</a> <a
-                                                        href="{% url 'DeleteWhastapp' w.pk %}"
-                                                        class="btn btn-xs btn-outline-danger float-right"><i
-                                                        class="fa fa-trash-alt"></i></a></li>
+                                                        href="Https://wa.me/{{ w }}">Https://wa.me/{{ w }}</a>
+                                                    <a
+                                                            href="{% url 'DeleteWhastapp' w.pk %}?user={{ object.pk }}"
+                                                            class="btn btn-xs btn-outline-danger float-right"><i
+                                                            class="fa fa-trash-alt"></i></a></li> <br>
 
                                             {% endfor %}
                                         </ul>
@@ -254,7 +256,7 @@
                                             <i class="fa fa-handshake" aria-hidden="true"></i>
                                             Nombres de los socios
                                         </h3>
-                                        <a href="{% url 'CreateSocio' %}"
+                                        <a href="{% url 'CreateSocioRoot' user.pk %}"
                                            class="btn btn-xs btn-outline-primary float-right"><i
                                                 class="fa fa-plus"></i></a>
                                     </div>
@@ -262,9 +264,10 @@
                                     <div class="card-body">
                                         <ul>
                                             {% for s in socios %}
-                                                <li class="mb-1">{{ s }} <a href="{% url 'DeleteSocio' s.pk %}"
-                                                                            class="btn btn-xs btn-outline-danger float-right"><i
-                                                        class="fa fa-trash-alt"></i></a></li>
+                                                <li class="mb-1">{{ s }} <a
+                                                        href="{% url 'DeleteSocio' s.pk %}?user={{ object.pk }}"
+                                                        class="btn btn-xs btn-outline-danger float-right"><i
+                                                        class="fa fa-trash-alt"></i></a></li><br>
 
                                             {% endfor %}
 
@@ -282,7 +285,7 @@
                                             <i class="fa fa-home" aria-hidden="true"></i>
                                             Domicilios sociales
                                         </h3>
-                                        <a href="{% url 'CreateDomicilios' %}"
+                                        <a href="{% url 'CreateDomiciliosRoot' user.pk %}"
                                            class="btn btn-xs btn-outline-primary float-right"><i
                                                 class="fa fa-plus"></i></a>
                                     </div>
@@ -290,9 +293,10 @@
                                     <div class="card-body">
                                         <ul>
                                             {% for d in domicilios %}
-                                                <li class="mb-1">{{ d }} <a href="{% url 'DeleteDomicilios' d.pk %}"
-                                                                            class="btn btn-xs btn-outline-danger float-right"><i
-                                                        class="fa fa-trash-alt"></i></a></li>
+                                                <li class="mb-1">{{ d }} <a
+                                                        href="{% url 'DeleteDomicilios' d.pk %}?user={{ object.pk }}"
+                                                        class="btn btn-xs btn-outline-danger float-right"><i
+                                                        class="fa fa-trash-alt"></i></a></li><br>
 
                                             {% endfor %}
                                         </ul>
@@ -309,7 +313,7 @@
                                             <i class="fas fa-envelope"></i>
                                             Correo
                                         </h3>
-                                        <a href="{% url 'CreateCorreo' %}"
+                                        <a href="{% url 'CreateCorreoRoot' user.pk %}"
                                            class="btn btn-xs btn-outline-primary float-right"><i
                                                 class="fa fa-plus"></i></a>
                                     </div>
@@ -317,9 +321,10 @@
                                     <div class="card-body">
                                         <ul>
                                             {% for c in emails %}
-                                                <li class="mb-1">{{ c }} <a href="{% url 'DeleteCorreo' c.pk %}"
-                                                                            class="btn btn-xs btn-outline-danger float-right"><i
-                                                        class="fa fa-trash-alt"></i></a></li>
+                                                <li class="mb-1">{{ c }} <a
+                                                        href="{% url 'DeleteCorreo' c.pk %}?user={{ object.pk }}"
+                                                        class="btn btn-xs btn-outline-danger float-right"><i
+                                                        class="fa fa-trash-alt"></i></a></li><br>
                                             {% endfor %}
                                         </ul>
                                     </div>
@@ -335,7 +340,7 @@
                                             <i class="fa fa-rss" aria-hidden="true"></i>
                                             Sitios web
                                         </h3>
-                                        <a href="{% url 'CreateSitios' %}"
+                                        <a href="{% url 'CreateSitiosRoot' user.pk %}"
                                            class="btn btn-xs btn-outline-primary float-right"><i
                                                 class="fa fa-plus"></i></a>
                                     </div>
@@ -343,9 +348,10 @@
                                     <div class="card-body">
                                         <ul>
                                             {% for w in webs %}
-                                                <li class="mb-1">{{ w }} <a href="{% url 'DeleteSitios' w.pk %}"
-                                                                            class="btn btn-xs btn-outline-danger float-right"><i
-                                                        class="fa fa-trash-alt"></i></a></li>
+                                                <li class="mb-1">{{ w }} <a
+                                                        href="{% url 'DeleteSitios' w.pk %}?user={{ object.pk }}"
+                                                        class="btn btn-xs btn-outline-danger float-right"><i
+                                                        class="fa fa-trash-alt"></i></a></li><br>
                                             {% endfor %}
                                         </ul>
                                     </div>
@@ -453,7 +459,7 @@
                                                     <a href="{% url 'EditBuscandoRoot' f.id object.pk %}"
                                                        class="btn btn-warning btn-xs"><i
                                                             class="fa fa-edit"></i></a>
-                                                    <a href="{% url 'DeleteBuscando' f.id %}"
+                                                    <a href="{% url 'DeleteBuscando' f.id %}?user={{ object.pk }}"
                                                        class="btn btn-danger btn-xs"><i
                                                             class="fa fa-trash-alt"></i></a>
                                                 </td>

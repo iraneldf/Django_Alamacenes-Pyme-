@@ -5,7 +5,9 @@ from django.urls import reverse_lazy, reverse
 from django.utils.decorators import method_decorator
 from django.views.generic import *
 
-from apps.APyme.forms import AlmacenForm, BuscandoForm, AlmacenFormRoot, BuscandoFormRoot
+from apps.APyme.forms import AlmacenForm, BuscandoForm, AlmacenFormRoot, BuscandoFormRoot, TelefonoFormRoot, \
+    TelefonoForm, SociosForm, DomiciliosForm, CorreoForm, SitiosForm, WhatsappFormRoot, SociosFormRoot, \
+    DomiciliosFormRoot, CorreoFormRoot, SitiosFormRoot, WhatsappForm
 from apps.APyme.models import *
 
 
@@ -191,7 +193,7 @@ class Informacion(TemplateView):
 
 class CreateTelefono(CreateView):
     model = Telefonos
-    fields = ['telefono', 'perfil']
+    form_class = TelefonoForm
     template_name = 'CRUD/createOtros.html'
     success_url = reverse_lazy('informacion')
 
@@ -214,10 +216,19 @@ class DeleteTelefono(DeleteView):
         context['header'] = 'Teléfono'
         return context
 
+    def get_success_url(self):
+        if self.request.GET.get("user"):
+            print('Root')
+            user = self.request.GET.get("user")
+            return reverse('DetailsRoot', kwargs={'pk': user})
+        else:
+            print('Normal')
+            return reverse('informacion')
+
 
 class CreateWhastapp(CreateView):
     model = Whastapp
-    fields = ['telefono']
+    form_class = WhatsappForm
     template_name = 'CRUD/createOtros.html'
     success_url = reverse_lazy('informacion')
 
@@ -243,7 +254,7 @@ class DeleteWhastapp(DeleteView):
 
 class CreateSocio(CreateView):
     model = Socios
-    fields = ['nombre']
+    form_class = SociosForm
     template_name = 'CRUD/createOtros.html'
     success_url = reverse_lazy('informacion')
 
@@ -269,7 +280,7 @@ class DeleteSocio(DeleteView):
 
 class CreateDomicilios(CreateView):
     model = Domicilios
-    fields = ['domicilio']
+    form_class = DomiciliosForm
     template_name = 'CRUD/createOtros.html'
     success_url = reverse_lazy('informacion')
 
@@ -295,7 +306,7 @@ class DeleteDomicilios(DeleteView):
 
 class CreateCorreo(CreateView):
     model = Emails
-    fields = ['email']
+    form_class = CorreoForm
     template_name = 'CRUD/createOtros.html'
     success_url = reverse_lazy('informacion')
 
@@ -321,7 +332,7 @@ class DeleteCorreo(DeleteView):
 
 class CreateSitios(CreateView):
     model = Sitios
-    fields = ['sitio']
+    form_class = SitiosForm
     template_name = 'CRUD/createOtros.html'
     success_url = reverse_lazy('informacion')
 
@@ -610,7 +621,6 @@ def EditBuscandoRoot(request, pk, user):
     if request.method == 'POST':
         form = BuscandoFormRoot(instance=busc, data=request.POST)
         if form.is_valid():
-            print(request.POST)
             form.instance.user_id = user
             form.save()
             return HttpResponseRedirect(reverse('DetailsRoot', kwargs={'pk': user}))
@@ -622,3 +632,88 @@ def EditBuscandoRoot(request, pk, user):
         'header': 'Editar Buscando de:',
         'boton': 'Guardar cambios',
     })
+
+
+def CreateTelefonoRoot(request, user):
+    if request.method == 'POST':
+        form = TelefonoFormRoot(data=request.POST)
+        print(request.POST)
+        if form.is_valid():
+            form.instance.perfil_id = user
+            form.save()
+            return HttpResponseRedirect(reverse('DetailsRoot', kwargs={'pk': user}))
+
+    return render(request, 'CRUD/createOtros.html', {
+        'form': TelefonoFormRoot(),
+    })
+
+
+def CreateWhatsappRoot(request, user):
+    if request.method == 'POST':
+        form = WhatsappFormRoot(data=request.POST)
+        print(request.POST)
+        if form.is_valid():
+            form.instance.perfil_id = user
+            form.save()
+            return HttpResponseRedirect(reverse('DetailsRoot', kwargs={'pk': user}))
+
+    return render(request, 'CRUD/createOtros.html', {
+        'form': WhatsappFormRoot(),
+    })
+
+
+def CreateSociosRoot(request, user):
+    if request.method == 'POST':
+        form = SociosFormRoot(data=request.POST)
+        print(request.POST)
+        if form.is_valid():
+            form.instance.perfil_id = user
+            form.save()
+            return HttpResponseRedirect(reverse('DetailsRoot', kwargs={'pk': user}))
+
+    return render(request, 'CRUD/createOtros.html', {
+        'form': SociosFormRoot(),
+    })
+
+
+def CreateDomiciliosRoot(request, user):
+    if request.method == 'POST':
+        form = DomiciliosFormRoot(data=request.POST)
+        print(request.POST)
+        if form.is_valid():
+            form.instance.perfil_id = user
+            form.save()
+            return HttpResponseRedirect(reverse('DetailsRoot', kwargs={'pk': user}))
+
+    return render(request, 'CRUD/createOtros.html', {
+        'form': DomiciliosFormRoot(),
+    })
+
+
+def CreateEmailsRoot(request, user):
+    if request.method == 'POST':
+        form = CorreoFormRoot(data=request.POST)
+        print(request.POST)
+        if form.is_valid():
+            form.instance.perfil_id = user
+            form.save()
+            return HttpResponseRedirect(reverse('DetailsRoot', kwargs={'pk': user}))
+
+    return render(request, 'CRUD/createOtros.html', {
+        'form': CorreoFormRoot(),
+    })
+
+
+def CreateSitiosRoot(request, user):
+    if request.method == 'POST':
+        form = SitiosFormRoot(data=request.POST)
+        print(request.POST)
+        if form.is_valid():
+            form.instance.perfil_id = user
+            form.save()
+            return HttpResponseRedirect(reverse('DetailsRoot', kwargs={'pk': user}))
+
+    return render(request, 'CRUD/createOtros.html', {
+        'form': SitiosFormRoot(),
+    })
+

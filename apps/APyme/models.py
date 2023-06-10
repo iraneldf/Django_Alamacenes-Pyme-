@@ -67,7 +67,7 @@ class Buscando(models.Model):
 
 class Telefonos(models.Model):
     perfil = models.ForeignKey(User, on_delete=models.CASCADE)
-    telefono = models.CharField(max_length=20, verbose_name='teléfono', unique=True)
+    telefono = models.CharField(max_length=20, verbose_name='teléfono')
 
     def __str__(self):
         return self.telefono

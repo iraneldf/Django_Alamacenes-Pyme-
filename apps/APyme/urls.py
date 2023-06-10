@@ -39,9 +39,22 @@ urlpatterns = [
 
     path('alarmas/delete/<int:pk>', DeleteAlarma.as_view(), name='DeleteAlarma'),
 
+    # ROOT
     path('root/almacen/create/<int:pk>', CreateAlmacenRoot.as_view(), name='CreateAlmacenRoot'),
     path('root/almacen/edit/<int:pk>/<int:user>', EditAlmacenRoot, name='EditAlmacenRoot'),
     path('root/buscando/create/<int:pk>', CreateBuscandoRoot, name='CreateBuscandoRoot'),
     path('root/buscando/edit/<int:pk>/<int:user>', EditBuscandoRoot, name='EditBuscandoRoot'),
+
+    path('root/create/telefonos/<int:user>', CreateTelefonoRoot, name='CreateTelefonoRoot'),
+
+    path('root/create/whatsapp/<int:user>', CreateWhatsappRoot, name='CreateWhastappRoot'),
+
+    path('root/create/socios/<int:user>', CreateSociosRoot, name='CreateSocioRoot'),
+
+    path('root/create/domicilio/<int:user>', CreateDomiciliosRoot, name='CreateDomiciliosRoot'),
+
+    path('root/create/email/<int:user>', CreateEmailsRoot, name='CreateCorreoRoot'),
+
+    path('root/create/web/<int:user>', CreateSitiosRoot, name='CreateSitiosRoot'),
 
 ]
