@@ -66,7 +66,7 @@
             <form action="#" method="post">
                 {% csrf_token %}
                 <div class="input-group mb-3">
-                    {{ form.username|add_class:'form-control'|attr:'placeholder=Correo' }}
+                    {{ form.username|add_class:'form-control'|attr:'placeholder=Email' }}
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-envelope"></span>
@@ -96,15 +96,16 @@
             <p class="mb-0">
                 <a href="{% url 'register' %}" class="text-center">Registrar una nueva empresa</a>
             </p>
-{#            {% if form.errors %}#}
-{#                <div class="mb-2">#}
-{#                    <div class="password-reset-link" style="text-align: center;">#}
-{#                        <a href="{% url 'my_password_reset' %}">#}
-{#                            {% trans 'Forgotten your password or username?' %}#}
-{#                        </a>#}
-{#                    </div>#}
-{#                </div>#}
-{#            {% endif %}#}
+
+            {% if form.errors %}
+                <div class="mb-2">
+                    <div class="password-reset-link">
+                        <a href="{% url 'my_password_reset' %}">
+                            {% trans 'Forgotten your password or username?' %}
+                        </a>
+                    </div>
+                </div>
+            {% endif %}
         </div>
         <!-- /.login-card-body -->
     </div>

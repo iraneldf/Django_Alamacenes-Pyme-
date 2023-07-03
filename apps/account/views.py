@@ -1,9 +1,9 @@
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
+from django.contrib.auth.forms import SetPasswordForm
 from django.contrib.auth.tokens import default_token_generator
-from django.contrib.auth.views import PasswordChangeView, PasswordResetView
+from django.contrib.auth.views import PasswordChangeView, LoginView, PasswordResetView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.sites.shortcuts import get_current_site
 from django.http import HttpResponseRedirect
@@ -12,7 +12,6 @@ from django.urls import reverse
 from django.urls import reverse_lazy
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.utils.translation import gettext_lazy as _
 
 from AlacenenesPyme import settings
 from apps.account.forms import RegisterUserForm, UpdateUserForm, UpdateProfileForm
@@ -35,6 +34,13 @@ def create_mail(to, subject, template_name, context):
     )
     message.attach_alternative(content, 'text/html')
     return message
+
+
+class MyLoginView(LoginView):
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return redirect('alarmas')
+        return super().dispatch(request, *args, **kwargs)
 
 
 class ChangePasswordView(SuccessMessageMixin, PasswordChangeView):
@@ -157,45 +163,6 @@ def activate(request, uidb64, token):
                       )
 
 
-class MyPasswordResetView(PasswordResetView):
-    email_template_name = "registration/password_reset_mail.html"
-    form_class = PasswordResetForm
-    from_email = None
-    html_email_template_name = "registration/password_reset_mail.html"
-    subject_template_name = "registration/password_reset_subject.txt"
-    success_url = reverse_lazy("password_reset_done")
-    template_name = "registration/password_reset_form.html"
-    title = _("Password reset")
-    token_generator = default_token_generator
-
-    # @method_decorator(csrf_protect)
-    # def dispatch(self, *args, **kwargs):
-    #     self.extra_email_context = {'cfg': Config.objects.first() if Config.objects.exists() else None}
-    #     return super().dispatch(*args, **kwargs)
-
-    def get(self, request, *args, **kwargs):
-        return super().get(request, *args, **kwargs)
-
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     context.update({'cfg': Config.objects.first() if Config.objects.exists() else None})
-    #     return context
-
-    def form_valid(self, form):
-        opts = {
-            "use_https": self.request.is_secure(),
-            "token_generator": self.token_generator,
-            "from_email": self.from_email,
-            "email_template_name": self.email_template_name,
-            "subject_template_name": self.subject_template_name,
-            "request": self.request,
-            "html_email_template_name": self.html_email_template_name,
-            "extra_email_context": self.extra_email_context,
-        }
-        form.save(**opts)
-        return super().form_valid(form)
-
-
 @login_required
 def profile(request):
     if request.method == 'POST':
@@ -235,3 +202,15 @@ def profileRoot(request, pk):
         'user_form': user_form,
         'profile_form': profile_form,
     })
+
+
+class MyPasswordResetView(PasswordResetView):
+    email_template_name = "registration/password_reset_mail_personalizado.html"
+    html_email_template_name = "registration/password_reset_mail_personalizado.html"
+    subject_template_name = "registration/password_reset_subject.txt"
+
+    template_name = "registration/password_reset_form.html"
+
+
+class CustomPasswordResetView(PasswordResetView):
+    email_template_name = "registration/password_reset_mail_personalizado.html"

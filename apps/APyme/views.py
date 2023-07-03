@@ -498,7 +498,7 @@ class DeleteBuscando(DeleteView):
 # Root
 class ListEmpresas(ListView):
     template_name = 'Root/empresas.html'
-    model = User
+    queryset = User.objects.filter(is_active=True)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -716,4 +716,3 @@ def CreateSitiosRoot(request, user):
     return render(request, 'CRUD/createOtros.html', {
         'form': SitiosFormRoot(),
     })
-
