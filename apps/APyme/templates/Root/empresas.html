@@ -123,9 +123,14 @@
                 </thead>
                 <tbody>
                 {% for e in object_list %}
-                    <tr>
+                    <tr {% if not e.is_active %}class="text-danger"{% endif %}>
                         <td style="width: 15%">
-                            <a href="{% url 'DetailsRoot' e.pk %}" class="btn-sm btn btn-primary">Ver empresa</a>
+
+                                <a href="{% url 'DetailsRoot' e.pk %}" class="btn-sm btn btn-primary ">Ver empresa</a>
+
+
+
+
                         </td>
                         <td style="width: 30%"><img src="{{ e.profile.get_logo }}" style="width: 15%"
                                                     alt="Logo de empresa"

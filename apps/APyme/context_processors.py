@@ -9,7 +9,7 @@ def ctx_dict(request):
             'buscandosC': Buscando.objects.filter(user=get_current_user()),
             'almacenesC': Almacen.objects.filter(user=get_current_user()),
             'alarmasC': Alarmas.objects.filter(user2=get_current_user()),
-            'empresasC': User.objects.all(),
+            'empresasC': User.objects.exclude(is_superuser=True),
         }
     else:
         return {

@@ -40,6 +40,7 @@ urlpatterns = [
     path('alarmas/delete/<int:pk>', DeleteAlarma.as_view(), name='DeleteAlarma'),
 
     # ROOT
+    path('root/eliminar-usuario/<int:pk>/', EliminarUsuario.as_view(), name='eliminar_usuario'),
     path('root/almacen/create/<int:pk>', CreateAlmacenRoot.as_view(), name='CreateAlmacenRoot'),
     path('root/almacen/edit/<int:pk>/<int:user>', EditAlmacenRoot, name='EditAlmacenRoot'),
     path('root/buscando/create/<int:pk>', CreateBuscandoRoot, name='CreateBuscandoRoot'),

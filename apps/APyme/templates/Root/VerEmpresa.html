@@ -16,9 +16,21 @@
     {% endif %}
 
 
+
+
+
+
     <div class="col-12">
         <div class="card card-primary card-tabs">
-            <div class="card-header p-0 pt-1">
+            <div class="card-header p-0 pt-1 pb-0">
+
+                <a class="float-right" href="{% url 'eliminar_usuario' object.pk %}">
+                    <button type="button" class="btn bg-danger"><i
+                            class="fa fa-trash"></i> Eliminar empresa
+                    </button>
+                </a>
+
+
                 <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
                     <li class="pt-2 px-3"><h3 class="card-title">{{ object }}</h3></li>
                     <li class="nav-item">
@@ -41,7 +53,10 @@
                            href="#custom-tabs-two-settings" role="tab" aria-controls="custom-tabs-two-settings"
                            aria-selected="false">Buscando</a>
                     </li>
+
                 </ul>
+
+
             </div>
             <div class="card-body">
                 <div class="tab-content" id="custom-tabs-two-tabContent">
@@ -113,11 +128,13 @@
                                         </div>
                                         <!-- /.widget-user-image -->
 
+
                                         <a href="{% url 'user_changeRoot' object.pk %}"
                                            class="btn btn-warning float-right"><i
                                                 class="fa fa-edit"></i>
                                             Editar
                                             datos</a>
+
                                         <h3 class="widget-user-username">{{ object.username }}</h3>
                                         <h5 class="widget-user-desc">{{ object.email }}</h5>
 
@@ -380,7 +397,7 @@
                                         Añadir producto</a>
                                 </div>
                                 <!-- /.card-header -->
-                                <div class="card-body">
+                                <div class="card-body table-responsive">
                                     <table class="table table-active">
                                         <thead>
                                         <tr>
@@ -437,7 +454,7 @@
                                         Añadir producto</a>
                                 </div>
                                 <!-- /.card-header -->
-                                <div class="card-body">
+                                <div class="card-body table-responsive">
                                     <table class="table table-active">
                                         <thead>
                                         <tr>

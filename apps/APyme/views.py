@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy, reverse
@@ -498,7 +499,7 @@ class DeleteBuscando(DeleteView):
 # Root
 class ListEmpresas(ListView):
     template_name = 'Root/empresas.html'
-    queryset = User.objects.filter(is_active=True)
+    queryset = User.objects.exclude(is_superuser=True)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -534,6 +535,24 @@ class DetailsRoot(DetailView):
         context['path'] = 'detallesRoot'
         context['titulo'] = f"Información sobre {self.object}"
         context['alarmas'] = Alarmas.objects.filter(user=self.object)
+        return context
+
+
+class EliminarUsuario(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = User
+    template_name = 'CRUD/deleteOtros.html'
+    success_url = reverse_lazy('ListEmpresas')
+
+    def test_func(self):
+        # Verifica que el usuario autenticado tenga los permisos necesarios para eliminar un usuario
+        usuario_a_eliminar = self.get_object()
+        return self.request.user != usuario_a_eliminar
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['succes_url'] = reverse('DetailsRoot', kwargs={'pk': self.kwargs['pk']})
+        context['header'] = 'Eliminar usuario'
+        context['mensaje'] = '¿Estás seguro de que deseas eliminar este usuario?'
         return context
 
 
