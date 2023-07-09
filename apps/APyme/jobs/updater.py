@@ -1,5 +1,5 @@
 from apscheduler.schedulers.background import BackgroundScheduler
-from crum import get_current_user
+
 
 from AlacenenesPyme import settings
 from apps.APyme.jobs import jobs
