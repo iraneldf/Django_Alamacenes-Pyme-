@@ -366,7 +366,7 @@ class ListAlmacen(ListView):
         context['path'] = 'almacen'
         context['titulo'] = 'Almacén'
         context['texto'] = 'En esta pantalla podrá indicar los productos que su empresa' \
-                           ' tiene en existencia asi como el precio y la cantidad.'
+                           ' tiene en existencia así como el precio y la cantidad.'
 
         return context
 
@@ -400,7 +400,7 @@ class UpdateAlmacen(UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['titulo'] = 'Editar producto en Almacen'
+        context['titulo'] = 'Editar producto en Almacén'
         context['header'] = 'Editar producto'
         context['boton'] = 'Actualizar datos'
         return context
@@ -435,8 +435,8 @@ class ListBuscando(ListView):
         context['path'] = 'buscando'
         context['titulo'] = 'Buscando'
         context[
-            'texto'] = 'En esta pantalla podrá indicar aquellos productos que está buscando asi como opcionalmente el precio y la cantidad. Si deja el valor de la casilla precio o cantidad en 0 estos criterios no se tendran en cuenta para las busquedas. Una vez alguna empresa agregue a su almacen algun producto de los que esta buscando, se le enviara una notificacion por email y se pondra una tarjeta en Alarmas donde podra inspeccionar' \
-                       ' la empresa en cuestion y los productos que coincidieron con su busqueda.'
+            'texto'] = 'En esta pantalla podrá indicar aquellos productos que está buscando así como opcionalmente el precio y la cantidad. Si deja el valor de la casilla precio o cantidad en 0 estos criterios no se tendrán en cuenta para las búsquedas. Una vez alguna empresa agregue a su almacén algún producto de los que esta buscando, se le enviará una notificación por email y se pondrá una tarjeta en Alarmas donde podrá inspeccionar' \
+                       ' la empresa en cuestión y los productos que coincidieron con su busqueda.'
         return context
 
     @method_decorator(login_required)

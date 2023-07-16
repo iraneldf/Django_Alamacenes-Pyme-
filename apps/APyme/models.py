@@ -91,7 +91,7 @@ class Whastapp(models.Model):
 
 class Socios(models.Model):
     perfil = models.ForeignKey(User, on_delete=models.CASCADE)
-    nombre = models.CharField(max_length=20, verbose_name='nombre')
+    nombre = models.CharField(max_length=500, verbose_name='nombre')
 
     def __str__(self):
         return self.nombre
@@ -127,7 +127,7 @@ class Emails(models.Model):
 
 class Sitios(models.Model):
     perfil = models.ForeignKey(User, on_delete=models.CASCADE)
-    sitio = models.CharField(max_length=50, verbose_name='sitio web')
+    sitio = models.CharField(max_length=100, verbose_name='sitio web')
 
     def __str__(self):
         return self.sitio

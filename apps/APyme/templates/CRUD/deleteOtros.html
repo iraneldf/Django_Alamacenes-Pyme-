@@ -22,12 +22,11 @@
                 {% csrf_token %}
 
                 <div class="alert alert-danger alert-dismissible mt-4 container w-75">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                     <h5><i class="icon fas fa-ban"></i> Notificación!</h5>
                     Está seguro que desea eliminar el {{ header }} {{ object }} ?
                 </div>
                 <div class="card-footer text-center">
-                    <button type="submit" class="btn btn-primary">Si, aceptar</button>
+                    <button type="submit" class="btn btn-primary">Aceptar</button>
                     <a href="{{ succes_url }}" type="submit" class="btn btn-info">Cancelar</a>
                 </div>
             </form>

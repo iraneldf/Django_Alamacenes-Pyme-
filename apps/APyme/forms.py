@@ -65,7 +65,7 @@ class BuscandoForm(ModelForm):
                          required=True,
                          widget=TextInput(
                              attrs={'class': 'form-control',
-                                    'placeholder': 'Entre el nombre de qweqwe'}))
+                                    'placeholder': 'Entre el nombre de producto'}))
     cantidad = IntegerField(max_value=99999, required=False,
                             widget=NumberInput(attrs={'class': 'form-control',
                                                       'placeholder': 'Entre la cantidad'}))
@@ -90,7 +90,7 @@ class BuscandoFormRoot(ModelForm):
                          required=True,
                          widget=TextInput(
                              attrs={'class': 'form-control',
-                                    'placeholder': 'Entre el nombre de qweqwe'}))
+                                    'placeholder': 'Entre el nombre de producto'}))
     cantidad = IntegerField(max_value=99999, required=False,
                             widget=NumberInput(attrs={'class': 'form-control',
                                                       'placeholder': 'Entre la cantidad'}))
