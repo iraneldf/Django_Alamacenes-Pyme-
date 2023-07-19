@@ -120,7 +120,12 @@
                         {% for t in telefonos %}
                             <li class="mb-1">{{ t }} <a href="{% url 'DeleteTelefono' t.pk %}"
                                                         class="btn btn-xs btn-outline-danger float-right"><i
-                                    class="fa fa-trash-alt"></i></a></li>
+                                    class="fa fa-trash-alt"></i></a>
+
+                                <a href="{% url 'EditTelefono' t.pk %}"
+                                   class="btn btn-outline-warning btn-xs float-right" style="margin-right:2px "><i
+                                        class="fa fa-edit"></i></a>
+                            </li>
                         {% endfor %}
                     </ul>
                 </div>
@@ -146,7 +151,12 @@
                             <li class="mb-1"><a href="Https://wa.me/{{ w }}">Https://wa.me/{{ w }}</a> <a
                                     href="{% url 'DeleteWhastapp' w.pk %}"
                                     class="btn btn-xs btn-outline-danger float-right"><i
-                                    class="fa fa-trash-alt"></i></a></li>
+                                    class="fa fa-trash-alt"></i></a>
+                                <a href="{% url 'EditWhatsapp' w.pk %}"
+                                   class="btn btn-outline-warning btn-xs float-right" style="margin-right:2px "><i
+                                        class="fa fa-edit"></i></a>
+                            </li>
+
 
                         {% endfor %}
                     </ul>
@@ -172,7 +182,10 @@
                         {% for s in socios %}
                             <li class="mb-1">{{ s }} <a href="{% url 'DeleteSocio' s.pk %}"
                                                         class="btn btn-xs btn-outline-danger float-right"><i
-                                    class="fa fa-trash-alt"></i></a></li>
+                                    class="fa fa-trash-alt"></i></a>
+                                <a href="{% url 'EditSocios' s.pk %}" class="btn btn-outline-warning btn-xs float-right"
+                                   style="margin-right:2px "><i
+                                        class="fa fa-edit"></i></a></li>
 
                         {% endfor %}
 
@@ -199,7 +212,10 @@
                         {% for d in domicilios %}
                             <li class="mb-1">{{ d }} <a href="{% url 'DeleteDomicilios' d.pk %}"
                                                         class="btn btn-xs btn-outline-danger float-right"><i
-                                    class="fa fa-trash-alt"></i></a></li>
+                                    class="fa fa-trash-alt"></i></a>
+                                <a href="{% url 'EditDomicilios' d.pk %}"
+                                   class="btn btn-outline-warning btn-xs float-right" style="margin-right:2px "><i
+                                        class="fa fa-edit"></i></a></li>
 
                         {% endfor %}
                     </ul>
@@ -225,7 +241,11 @@
                         {% for c in emails %}
                             <li class="mb-1">{{ c }} <a href="{% url 'DeleteCorreo' c.pk %}"
                                                         class="btn btn-xs btn-outline-danger float-right"><i
-                                    class="fa fa-trash-alt"></i></a></li>
+                                    class="fa fa-trash-alt"></i></a>
+                                <a href="{% url 'EditEmail' c.pk %}"
+                                   class="btn btn-outline-warning btn-xs float-right"
+                                   style="margin-right:2px "><i
+                                        class="fa fa-edit"></i></a></li>
                         {% endfor %}
                     </ul>
                 </div>
@@ -250,7 +270,10 @@
                         {% for w in webs %}
                             <li class="mb-1">{{ w }} <a href="{% url 'DeleteSitios' w.pk %}"
                                                         class="btn btn-xs btn-outline-danger float-right"><i
-                                    class="fa fa-trash-alt"></i></a></li>
+                                    class="fa fa-trash-alt"></i></a>
+                                <a href="{% url 'EditSitios' w.pk %}"
+                                   class="btn btn-outline-warning btn-xs float-right" style="margin-right:2px "><i
+                                        class="fa fa-edit"></i></a></li>
                         {% endfor %}
                     </ul>
                 </div>

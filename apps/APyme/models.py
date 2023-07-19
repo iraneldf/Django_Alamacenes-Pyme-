@@ -90,7 +90,10 @@ class Telefonos(models.Model):
 
 class Whastapp(models.Model):
     perfil = models.ForeignKey(User, on_delete=models.CASCADE)
-    telefono = models.CharField(max_length=20, verbose_name='WhatsApp')
+    telefono = models.CharField(max_length=20, verbose_name='WhatsApp', validators=[RegexValidator(
+        regex=r'^\d+$',
+        message='El teléfono debe contener solo números'
+    )])
 
     def __str__(self):
         return self.telefono

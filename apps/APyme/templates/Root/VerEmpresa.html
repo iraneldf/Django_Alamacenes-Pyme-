@@ -227,7 +227,13 @@
                                                 <li class="mb-1">{{ t }} <a
                                                         href="{% url 'DeleteTelefono' t.pk %}?user={{ object.pk }}"
                                                         class="btn btn-xs btn-outline-danger float-right"><i
-                                                        class="fa fa-trash-alt"></i></a></li><br>
+                                                        class="fa fa-trash-alt"></i></a>
+
+                                                    <a href="{% url 'EditTelefono' t.pk %}?user={{ object.pk }}"
+                                                       class="btn btn-outline-warning btn-xs float-right"
+                                                       style="margin-right:2px "><i
+                                                            class="fa fa-edit"></i></a>
+                                                </li><br>
                                             {% endfor %}
                                         </ul>
                                     </div>
@@ -256,7 +262,12 @@
                                                     <a
                                                             href="{% url 'DeleteWhastapp' w.pk %}?user={{ object.pk }}"
                                                             class="btn btn-xs btn-outline-danger float-right"><i
-                                                            class="fa fa-trash-alt"></i></a></li> <br>
+                                                            class="fa fa-trash-alt"></i></a>
+                                                    <a href="{% url 'EditWhatsapp' w.pk %}?user={{ object.pk }}"
+                                                       class="btn btn-outline-warning btn-xs float-right"
+                                                       style="margin-right:2px "><i
+                                                            class="fa fa-edit"></i></a>
+                                                </li> <br>
 
                                             {% endfor %}
                                         </ul>
@@ -284,7 +295,12 @@
                                                 <li class="mb-1">{{ s }} <a
                                                         href="{% url 'DeleteSocio' s.pk %}?user={{ object.pk }}"
                                                         class="btn btn-xs btn-outline-danger float-right"><i
-                                                        class="fa fa-trash-alt"></i></a></li><br>
+                                                        class="fa fa-trash-alt"></i></a>
+                                                    <a href="{% url 'EditSocios' s.pk %}?user={{ object.pk }}"
+                                                       class="btn btn-outline-warning btn-xs float-right"
+                                                       style="margin-right:2px "><i
+                                                            class="fa fa-edit"></i></a>
+                                                </li><br>
 
                                             {% endfor %}
 
@@ -313,7 +329,12 @@
                                                 <li class="mb-1">{{ d }} <a
                                                         href="{% url 'DeleteDomicilios' d.pk %}?user={{ object.pk }}"
                                                         class="btn btn-xs btn-outline-danger float-right"><i
-                                                        class="fa fa-trash-alt"></i></a></li><br>
+                                                        class="fa fa-trash-alt"></i></a>
+                                                    <a href="{% url 'EditDomicilios' d.pk %}?user={{ object.pk }}"
+                                                       class="btn btn-outline-warning btn-xs float-right"
+                                                       style="margin-right:2px "><i
+                                                            class="fa fa-edit"></i></a>
+                                                </li><br>
 
                                             {% endfor %}
                                         </ul>
@@ -341,7 +362,12 @@
                                                 <li class="mb-1">{{ c }} <a
                                                         href="{% url 'DeleteCorreo' c.pk %}?user={{ object.pk }}"
                                                         class="btn btn-xs btn-outline-danger float-right"><i
-                                                        class="fa fa-trash-alt"></i></a></li><br>
+                                                        class="fa fa-trash-alt"></i></a>
+                                                    <a href="{% url 'EditEmail' c.pk %}?user={{ object.pk }}"
+                                                       class="btn btn-outline-warning btn-xs float-right"
+                                                       style="margin-right:2px "><i
+                                                            class="fa fa-edit"></i></a>
+                                                </li><br>
                                             {% endfor %}
                                         </ul>
                                     </div>
@@ -368,7 +394,12 @@
                                                 <li class="mb-1">{{ w }} <a
                                                         href="{% url 'DeleteSitios' w.pk %}?user={{ object.pk }}"
                                                         class="btn btn-xs btn-outline-danger float-right"><i
-                                                        class="fa fa-trash-alt"></i></a></li><br>
+                                                        class="fa fa-trash-alt"></i></a>
+                                                    <a href="{% url 'EditSitios' w.pk %}?user={{ object.pk }}"
+                                                       class="btn btn-outline-warning btn-xs float-right"
+                                                       style="margin-right:2px "><i
+                                                            class="fa fa-edit"></i></a>
+                                                </li><br>
                                             {% endfor %}
                                         </ul>
                                     </div>

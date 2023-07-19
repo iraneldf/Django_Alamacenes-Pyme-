@@ -202,6 +202,7 @@ class CreateTelefono(CreateView):
         context = super().get_context_data(**kwargs)
 
         context['header'] = 'Añadir un telefono'
+        context['boton'] = 'Añadir'
 
         return context
 
@@ -237,6 +238,7 @@ class CreateWhastapp(CreateView):
         context = super().get_context_data(**kwargs)
 
         context['header'] = 'Añadir un whastapp'
+        context['boton'] = 'Añadir'
 
         return context
 
@@ -263,6 +265,7 @@ class CreateSocio(CreateView):
         context = super().get_context_data(**kwargs)
 
         context['header'] = 'Añadir un  nombres de socio'
+        context['boton'] = 'Añadir'
 
         return context
 
@@ -289,6 +292,7 @@ class CreateDomicilios(CreateView):
         context = super().get_context_data(**kwargs)
 
         context['header'] = 'Añadir un domicilio social'
+        context['boton'] = 'Añadir'
 
         return context
 
@@ -315,6 +319,7 @@ class CreateCorreo(CreateView):
         context = super().get_context_data(**kwargs)
 
         context['header'] = 'Añadir un correo electrónico'
+        context['boton'] = 'Añadir'
 
         return context
 
@@ -341,6 +346,7 @@ class CreateSitios(CreateView):
         context = super().get_context_data(**kwargs)
 
         context['header'] = 'Añadir un sitio web'
+        context['boton'] = 'Añadir'
 
         return context
 
@@ -664,6 +670,7 @@ def CreateTelefonoRoot(request, user):
 
     return render(request, 'CRUD/createOtros.html', {
         'form': TelefonoFormRoot(),
+        'boton': 'Añadir'
     })
 
 
@@ -678,6 +685,7 @@ def CreateWhatsappRoot(request, user):
 
     return render(request, 'CRUD/createOtros.html', {
         'form': WhatsappFormRoot(),
+        'boton': 'Añadir'
     })
 
 
@@ -692,6 +700,7 @@ def CreateSociosRoot(request, user):
 
     return render(request, 'CRUD/createOtros.html', {
         'form': SociosFormRoot(),
+        'boton': 'Añadir'
     })
 
 
@@ -706,6 +715,7 @@ def CreateDomiciliosRoot(request, user):
 
     return render(request, 'CRUD/createOtros.html', {
         'form': DomiciliosFormRoot(),
+        'boton': 'Añadir'
     })
 
 
@@ -720,6 +730,7 @@ def CreateEmailsRoot(request, user):
 
     return render(request, 'CRUD/createOtros.html', {
         'form': CorreoFormRoot(),
+        'boton': 'Añadir'
     })
 
 
@@ -734,4 +745,190 @@ def CreateSitiosRoot(request, user):
 
     return render(request, 'CRUD/createOtros.html', {
         'form': SitiosFormRoot(),
+        'boton': 'Añadir'
     })
+
+
+class TelefonosUpdateView(UpdateView):
+    model = Telefonos
+    template_name = 'CRUD/createOtros.html'
+    success_url = reverse_lazy('informacion')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['header'] = 'Editar telefono'
+        context['boton'] = 'Actualizar datos'
+        return context
+
+    def get_form_class(self):
+        if self.request.GET.get("user"):
+            print('Root')
+
+            return TelefonoFormRoot
+        else:
+            print('Normal')
+            return TelefonoForm
+
+    def get_success_url(self):
+        if self.request.GET.get("user"):
+            print('Root')
+            user = self.request.GET.get("user")
+            return reverse('DetailsRoot', kwargs={'pk': user})
+        else:
+            print('Normal')
+            return reverse('informacion')
+
+
+class WhatsappUpdateView(UpdateView):
+    model = Whastapp
+    form_class = WhatsappForm
+    template_name = 'CRUD/createOtros.html'
+    success_url = reverse_lazy('informacion')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['header'] = 'Editar whatsapp'
+        context['boton'] = 'Actualizar datos'
+        return context
+
+    def get_form_class(self):
+        if self.request.GET.get("user"):
+            print('Root')
+
+            return WhatsappFormRoot
+        else:
+            print('Normal')
+            return WhatsappForm
+
+    def get_success_url(self):
+        if self.request.GET.get("user"):
+            print('Root')
+            user = self.request.GET.get("user")
+            return reverse('DetailsRoot', kwargs={'pk': user})
+        else:
+            print('Normal')
+            return reverse('informacion')
+
+
+class SociosUpdateView(UpdateView):
+    model = Socios
+    form_class = SociosForm
+    template_name = 'CRUD/createOtros.html'
+    success_url = reverse_lazy('informacion')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['header'] = 'Editar socio'
+        context['boton'] = 'Actualizar datos'
+        return context
+
+    def get_form_class(self):
+        if self.request.GET.get("user"):
+            print('Root')
+
+            return SociosFormRoot
+        else:
+            print('Normal')
+            return SociosForm
+
+    def get_success_url(self):
+        if self.request.GET.get("user"):
+            print('Root')
+            user = self.request.GET.get("user")
+            return reverse('DetailsRoot', kwargs={'pk': user})
+        else:
+            print('Normal')
+            return reverse('informacion')
+
+
+class DomiciliosUpdateView(UpdateView):
+    model = Domicilios
+    form_class = DomiciliosForm
+    template_name = 'CRUD/createOtros.html'
+    success_url = reverse_lazy('informacion')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['header'] = 'Editar domicilios'
+        context['boton'] = 'Actualizar datos'
+        return context
+
+    def get_form_class(self):
+        if self.request.GET.get("user"):
+            print('Root')
+
+            return DomiciliosFormRoot
+        else:
+            print('Normal')
+            return DomiciliosForm
+
+    def get_success_url(self):
+        if self.request.GET.get("user"):
+            print('Root')
+            user = self.request.GET.get("user")
+            return reverse('DetailsRoot', kwargs={'pk': user})
+        else:
+            print('Normal')
+            return reverse('informacion')
+
+
+class CorreoUpdateView(UpdateView):
+    model = Emails
+    form_class = CorreoForm
+    template_name = 'CRUD/createOtros.html'
+    success_url = reverse_lazy('informacion')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['header'] = 'Editar correo'
+        context['boton'] = 'Actualizar datos'
+        return context
+
+    def get_form_class(self):
+        if self.request.GET.get("user"):
+            print('Root')
+
+            return CorreoFormRoot
+        else:
+            print('Normal')
+            return CorreoForm
+
+    def get_success_url(self):
+        if self.request.GET.get("user"):
+            print('Root')
+            user = self.request.GET.get("user")
+            return reverse('DetailsRoot', kwargs={'pk': user})
+        else:
+            print('Normal')
+            return reverse('informacion')
+
+
+class SitiosUpdateView(UpdateView):
+    model = Sitios
+    form_class = SitiosForm
+    template_name = 'CRUD/createOtros.html'
+    success_url = reverse_lazy('informacion')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['header'] = 'Editar sitio'
+        context['boton'] = 'Actualizar datos'
+        return context
+
+    def get_form_class(self):
+        if self.request.GET.get("user"):
+            print('Root')
+
+            return SitiosFormRoot
+        else:
+            print('Normal')
+            return SitiosForm
+
+    def get_success_url(self):
+        if self.request.GET.get("user"):
+            print('Root')
+            user = self.request.GET.get("user")
+            return reverse('DetailsRoot', kwargs={'pk': user})
+        else:
+            print('Normal')
+            return reverse('informacion')

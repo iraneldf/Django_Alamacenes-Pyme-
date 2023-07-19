@@ -10,21 +10,27 @@ urlpatterns = [
     path('empresas/details/<int:pk>', DetailsRoot.as_view(), name='DetailsRoot'),
 
     path('informacion/create/telefonos', CreateTelefono.as_view(), name='CreateTelefono'),
+    path('informacion/edit/telefonos/<int:pk>', TelefonosUpdateView.as_view(), name='EditTelefono'),
     path('informacion/delete/telefonos/<int:pk>', DeleteTelefono.as_view(), name='DeleteTelefono'),
 
     path('informacion/create/whatsapp', CreateWhastapp.as_view(), name='CreateWhastapp'),
+    path('informacion/edit/whatsapp/<int:pk>', WhatsappUpdateView.as_view(), name='EditWhatsapp'),
     path('informacion/delete/whatsapp/<int:pk>', DeleteWhastapp.as_view(), name='DeleteWhastapp'),
 
     path('informacion/create/socios', CreateSocio.as_view(), name='CreateSocio'),
+    path('informacion/edit/socios/<int:pk>', SociosUpdateView.as_view(), name='EditSocios'),
     path('informacion/delete/socios/<int:pk>', DeleteSocio.as_view(), name='DeleteSocio'),
 
     path('informacion/create/domicilio', CreateDomicilios.as_view(), name='CreateDomicilios'),
+    path('informacion/edit/domicilio/<int:pk>', DomiciliosUpdateView.as_view(), name='EditDomicilios'),
     path('informacion/delete/domicilio/<int:pk>', DeleteDomicilios.as_view(), name='DeleteDomicilios'),
 
     path('informacion/create/email', CreateCorreo.as_view(), name='CreateCorreo'),
+    path('informacion/edit/email/<int:pk>', CorreoUpdateView.as_view(), name='EditEmail'),
     path('informacion/delete/email/<int:pk>', DeleteCorreo.as_view(), name='DeleteCorreo'),
 
     path('informacion/create/web', CreateSitios.as_view(), name='CreateSitios'),
+    path('informacion/edit/web/<int:pk>', SitiosUpdateView.as_view(), name='EditSitios'),
     path('informacion/delete/web/<int:pk>', DeleteSitios.as_view(), name='DeleteSitios'),
 
     path('almacen/', ListAlmacen.as_view(), name='almacen'),
