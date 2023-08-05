@@ -82,10 +82,18 @@
 
                 {% if request.user.is_superuser %}
                     <li class="nav-item">
+                        <a href="{% url 'Lista_unidades' %}"
+                           class="nav-link {% if path == 'unidades'  %}active{% endif %}">
+                            <i class="fa fa-ruler nav-icon"></i>
+                            <p>Unidades</p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
                         <a href="{% url 'ListEmpresas' %}"
                            class="nav-link {% if path == 'Root' or path == 'detallesRoot' %}active{% endif %}">
                             <i class="fa fa-user-plus nav-icon"></i>
-                            <p>Root</p>
+                            <p>Empresas</p>
                             {% if empresasC %}
                                 <span class="right badge  badge-secondary">{{ empresasC.count }}</span>
                             {% endif %}

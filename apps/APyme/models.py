@@ -1,5 +1,6 @@
 # Create your models here.
 from django.contrib.auth.models import AbstractUser
+from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator
 from django.db import models
 
@@ -34,13 +35,21 @@ class Profile(models.Model):
         verbose_name = 'Perfiles de empresas'
 
 
+class Unidad(models.Model):
+    unidad = models.CharField(max_length=100, verbose_name='unidad de medida', unique=True)
+
+    def __str__(self):
+        return self.unidad
+
+
 class Almacen(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='usuario_almacen', validators=[RegexValidator(
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='usuario_almacen')
+    producto = models.CharField(max_length=100, verbose_name='producto', validators=[RegexValidator(
         regex=r'^[a-zA-Z]+$',
-        message='El nombre debe contener solo letras'
+        message='El nombre del producto debe contener solo letras'
     )])
-    producto = models.CharField(max_length=100, verbose_name='producto')
     cantidad = models.PositiveIntegerField(verbose_name='cantidad')
+    unidad = models.CharField(max_length=100, verbose_name='unidad')
     precio = models.DecimalField(verbose_name='precio', max_digits=8, decimal_places=2)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -49,15 +58,20 @@ class Almacen(models.Model):
 
 
 class Buscando(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='usuario_buscando',
-                             validators=[RegexValidator(
-                                 regex=r'^[a-zA-Z]+$',
-                                 message='El nombre debe contener solo letras'
-                             )])
-    producto = models.CharField(max_length=100, verbose_name='producto')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='usuario_buscando')
+    producto = models.CharField(max_length=100, verbose_name='producto',
+                                validators=[RegexValidator(
+                                    regex=r'^[a-zA-Z]+$',
+                                    message='El nombre debe contener solo letras'
+                                )])
     cantidad = models.PositiveIntegerField(verbose_name='cantidad')
+    unidad = models.CharField(max_length=100, verbose_name='unidad')
     precio = models.DecimalField(verbose_name='precio', max_digits=8, decimal_places=2)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def clean(self):
+        if self.cantidad and not self.unidad:
+            raise ValidationError('La unidad es obligatoria si se proporciona la cantidad.')
 
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
@@ -75,10 +89,15 @@ class Buscando(models.Model):
 
 class Telefonos(models.Model):
     perfil = models.ForeignKey(User, on_delete=models.CASCADE)
-    telefono = models.CharField(max_length=20, verbose_name='teléfono', validators=[RegexValidator(
-        regex=r'^\d+$',
-        message='El teléfono debe contener solo números'
-    )])
+    telefono = models.CharField(max_length=14,
+
+                                verbose_name='teléfono',
+                                validators=[RegexValidator(
+                                    regex=r'^\d+$',
+                                    message='El teléfono debe contener solo números'
+                                )]
+
+                                )
 
     def __str__(self):
         return self.telefono
@@ -106,8 +125,8 @@ class Whastapp(models.Model):
 class Socios(models.Model):
     perfil = models.ForeignKey(User, on_delete=models.CASCADE)
     nombre = models.CharField(max_length=500, verbose_name='nombre', validators=[RegexValidator(
-        regex=r'^[a-zA-Z]+$',
-        message='El nombre debe contener solo letras'
+        regex=r'^[A-Za-zÀ-ÖØ-öø-ſ\']+([- ][A-Za-zÀ-ÖØ-öø-ſ\']+)*$',
+        message='El nombre no es válido'
     )])
 
     def __str__(self):
@@ -144,10 +163,7 @@ class Emails(models.Model):
 
 class Sitios(models.Model):
     perfil = models.ForeignKey(User, on_delete=models.CASCADE)
-    sitio = models.CharField(max_length=100, verbose_name='sitio web', validators=[RegexValidator(
-        regex=r'^(http|https)://[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
-        message='Ingrese una URL válida de un sitio web (por ejemplo, "http://www.ejemplo.com")'
-    )])
+    sitio = models.URLField(max_length=200, blank=True, null=True)
 
     def __str__(self):
         return self.sitio

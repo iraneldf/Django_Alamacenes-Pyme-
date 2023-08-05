@@ -64,4 +64,9 @@ urlpatterns = [
 
     path('root/create/web/<int:user>', CreateSitiosRoot, name='CreateSitiosRoot'),
 
+    path('root/unidades', unidad_list, name='Lista_unidades'),
+    path('root/unidades/create', unidad_create, name='Crear_unidad'),
+    path('root/unidades/edit/<int:pk>', unidad_edit, name='Editar_unidad'),
+    path('root/unidades/delete/<int:pk>', unidad_delete, name='Borrar_unidad'),
+
 ]

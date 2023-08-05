@@ -1,7 +1,9 @@
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.db.models import ProtectedError
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy, reverse
 from django.utils.decorators import method_decorator
 from django.views.generic import *
@@ -10,6 +12,7 @@ from apps.APyme.forms import AlmacenForm, BuscandoForm, AlmacenFormRoot, Buscand
     TelefonoForm, SociosForm, DomiciliosForm, CorreoForm, SitiosForm, WhatsappFormRoot, SociosFormRoot, \
     DomiciliosFormRoot, CorreoFormRoot, SitiosFormRoot, WhatsappForm
 from apps.APyme.models import *
+from apps.account.forms import UnidadMedidaForm
 
 
 def get_qs(self, qs):
@@ -395,6 +398,8 @@ class CreateAlmacen(CreateView):
         context['titulo'] = 'Añadir producto a Almacén'
         context['boton'] = 'Añadir'
         context['header'] = 'Añada un producto'
+        context['success_url'] = self.success_url
+        context['unidades'] = Unidad.objects.all()
         return context
 
 
@@ -409,6 +414,8 @@ class UpdateAlmacen(UpdateView):
         context['titulo'] = 'Editar producto en Almacén'
         context['header'] = 'Editar producto'
         context['boton'] = 'Actualizar datos'
+        context['unidades'] = Unidad.objects.all()
+        context['success_url'] = self.success_url
         return context
 
 
@@ -464,13 +471,16 @@ class CreateBuscando(CreateView):
         context['titulo'] = 'Añadir producto a Buscando'
         context['header'] = 'Añada un producto'
         context['boton'] = 'Añadir'
+        uni = Almacen.objects.values_list('unidad')
+        context['unidades'] = Unidad.objects.filter(unidad__in=uni)
+        context['success_url'] = self.success_url
         return context
 
 
 class UpdateBuscando(UpdateView):
     model = Buscando
     form_class = BuscandoForm
-    template_name = 'CRUD/createBuscando.html'
+    template_name = 'CRUD/createProducto.html'
     success_url = reverse_lazy('buscando')
 
     def get_context_data(self, **kwargs):
@@ -478,18 +488,15 @@ class UpdateBuscando(UpdateView):
         context['titulo'] = 'Editar producto en Buscando'
         context['header'] = 'Editar producto'
         context['boton'] = 'Actualizar datos'
+        uni = Almacen.objects.values_list('unidad')
+        context['unidades'] = Unidad.objects.filter(unidad__in=uni)
+        context['success_url'] = self.success_url
         return context
 
 
 class DeleteBuscando(DeleteView):
     model = Buscando
     template_name = 'CRUD/Delete.html'
-    success_url = reverse_lazy('buscando')
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['succes_url'] = self.success_url
-        return context
 
     def get_success_url(self):
 
@@ -499,7 +506,12 @@ class DeleteBuscando(DeleteView):
             return reverse('DetailsRoot', kwargs={'pk': user})
         else:
             print('Normal')
-            return reverse('almacen')
+            return reverse('buscando')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['succes_url'] = self.get_success_url()
+        return context
 
 
 # Root
@@ -587,6 +599,8 @@ class CreateAlmacenRoot(CreateView):
         context['titulo'] = 'Añadir producto a Almacén'
         context['boton'] = 'Añadir'
         context['header'] = 'Añada un producto'
+        context['success_url'] = self.get_success_url()
+        context['unidades'] = Unidad.objects.all()
         return context
 
     def get_success_url(self):
@@ -621,6 +635,8 @@ def EditAlmacenRoot(request, pk, user):
         'empresa': User.objects.get(id=user),
         'header': 'Editar Almacén de:',
         'boton': 'Guardar cambios',
+        'unidades': Unidad.objects.all(),
+        'success_url': reverse('DetailsRoot', kwargs={'pk': user}),
     })
 
 
@@ -631,12 +647,14 @@ def CreateBuscandoRoot(request, pk):
             form.instance.user_id = pk
             form.save()
             return HttpResponseRedirect(reverse('DetailsRoot', kwargs={'pk': pk}))
-
+    uni = Almacen.objects.values_list('unidad')
     return render(request, 'Root/createProductoRoot.html', {
         'form': BuscandoFormRoot(),
         'empresa': User.objects.get(id=pk),
         'header': 'Buscando de:',
         'boton': 'Añadir',
+        'unidades': Unidad.objects.filter(unidad__in=uni),
+        'success_url': reverse('DetailsRoot', kwargs={'pk': pk}),
     })
 
 
@@ -649,13 +667,15 @@ def EditBuscandoRoot(request, pk, user):
             form.instance.user_id = user
             form.save()
             return HttpResponseRedirect(reverse('DetailsRoot', kwargs={'pk': user}))
-
+    uni = Almacen.objects.values_list('unidad')
     return render(request, 'Root/createProductoRoot.html', {
         'buscando': busc,
         'form': BuscandoFormRoot(instance=busc),
         'empresa': User.objects.get(id=user),
         'header': 'Editar Buscando de:',
         'boton': 'Guardar cambios',
+        'unidades': Unidad.objects.filter(unidad__in=uni),
+        'success_url': reverse('DetailsRoot', kwargs={'pk': user}),
     })
 
 
@@ -932,3 +952,43 @@ class SitiosUpdateView(UpdateView):
         else:
             print('Normal')
             return reverse('informacion')
+
+
+def unidad_list(request):
+    unidades = Unidad.objects.all()
+    return render(request, 'Root/unidad_list.html', {'unidades': unidades, 'path': 'unidades', 'titulo': 'Unidades'})
+
+
+def unidad_create(request):
+    if request.method == 'POST':
+        form = UnidadMedidaForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('Lista_unidades')
+    else:
+        form = UnidadMedidaForm()
+    return render(request, 'CRUD/createOtros.html', {'form': form, 'boton': 'Agregar'})
+
+
+def unidad_edit(request, pk):
+    unidad = get_object_or_404(Unidad, pk=pk)
+    if request.method == 'POST':
+        form = UnidadMedidaForm(request.POST, instance=unidad)
+        if form.is_valid():
+            form.save()
+            return redirect('Lista_unidades')
+    else:
+        form = UnidadMedidaForm(instance=unidad)
+    return render(request, 'CRUD/createOtros.html', {'form': form, 'boton': 'Guardar cambios'})
+
+
+def unidad_delete(request, pk):
+    unidad = get_object_or_404(Unidad, pk=pk)
+
+    try:
+        unidad.delete()
+    except ProtectedError:
+        messages.error(request,
+                       'No se puede eliminar esta instancia porque hay uno o más registros relacionados con ella.')
+
+    return redirect('Lista_unidades')

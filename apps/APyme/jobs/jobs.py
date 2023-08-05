@@ -51,6 +51,7 @@ def prueba():
             producto = b.producto
             cantidad = b.cantidad
             precio = b.precio
+            unidad = b.unidad
             print(b, "|", b.cantidad, "|", b.precio)
             # Buscar matches de la empresa e
             almacenMatch = almacen.filter(producto__icontains=producto).exclude(
@@ -58,12 +59,12 @@ def prueba():
 
             if cantidad != 0 and precio != 0:
                 print('if 1')
-                almacenMatch = almacenMatch.filter(cantidad__gte=cantidad, precio__lte=precio)
+                almacenMatch = almacenMatch.filter(cantidad__gte=cantidad, precio__lte=precio, unidad=unidad)
                 print("matches: ", almacenMatch)
 
             if cantidad != 0 and precio == 0:
                 print('if 2')
-                almacenMatch = almacenMatch.filter(cantidad__gte=cantidad)
+                almacenMatch = almacenMatch.filter(cantidad__gte=cantidad, unidad=unidad)
                 print("matches: ", almacenMatch)
 
             if cantidad == 0 and precio != 0:
@@ -97,4 +98,4 @@ def prueba():
 
 
 def ppp():
-    prueba()
+    pass

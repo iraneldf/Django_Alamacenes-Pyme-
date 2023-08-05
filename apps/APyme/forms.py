@@ -10,14 +10,15 @@ class AlmacenForm(ModelForm):
                          widget=TextInput(
                              attrs={'class': 'form-control', 'placeholder': 'Entre el nombre de producto'}))
     cantidad = IntegerField(max_value=99999, required=True,
-                            widget=NumberInput(attrs={'class': 'form-control', 'placeholder': 'Entre la cantidad'}))
+                            widget=NumberInput(
+                                attrs={'class': 'form-control w-50', 'placeholder': 'Entre la cantidad'}))
 
     precio = DecimalField(required=True,
                           widget=NumberInput(attrs={'class': 'form-control', 'placeholder': 'Entre el precio'}))
 
     class Meta:
         model = Almacen
-        fields = ['producto', 'precio', 'cantidad']
+        fields = ['producto', 'precio', 'cantidad', 'unidad']
 
     def save(self, commit=True):
         prod = super().save(commit=False)
@@ -41,7 +42,7 @@ class AlmacenFormRoot(ModelForm):
 
     class Meta:
         model = Almacen
-        fields = ['producto', 'precio', 'cantidad']
+        fields = ['producto', 'precio', 'cantidad', 'unidad']
 
 
 class ActAlmacenForm(ModelForm):
@@ -57,7 +58,7 @@ class ActAlmacenForm(ModelForm):
 
     class Meta:
         model = Almacen
-        fields = ['producto', 'precio', 'cantidad']
+        fields = ['producto', 'precio', 'cantidad', 'unidad']
 
 
 class BuscandoForm(ModelForm):
@@ -75,7 +76,7 @@ class BuscandoForm(ModelForm):
 
     class Meta:
         model = Buscando
-        fields = ['producto', 'precio', 'cantidad']
+        fields = ['producto', 'precio', 'cantidad', 'unidad']
 
     def save(self, commit=True):
         prod = super().save(commit=False)
@@ -100,7 +101,7 @@ class BuscandoFormRoot(ModelForm):
 
     class Meta:
         model = Buscando
-        fields = ['producto', 'precio', 'cantidad']
+        fields = ['producto', 'precio', 'cantidad', 'unidad']
 
 
 class TelefonoForm(ModelForm):

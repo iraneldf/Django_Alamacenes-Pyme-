@@ -35,7 +35,7 @@
                         <tr>
 
                             <td>{{ a }}</td>
-                            <td>{{ a.cantidad }}</td>
+                            <td>{{ a.cantidad }} {{ a.unidad|default_if_none:'' }}</td>
                             <td>  {{ a.precio }}</td>
 
                         </tr>

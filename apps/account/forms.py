@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
 
-from apps.APyme.models import Profile
+from apps.APyme.models import Profile, Unidad
 
 User = get_user_model()
 
@@ -45,3 +45,9 @@ class UpdateProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['logo', 'bio']
+
+
+class UnidadMedidaForm(forms.ModelForm):
+    class Meta:
+        model = Unidad
+        fields = ['unidad']

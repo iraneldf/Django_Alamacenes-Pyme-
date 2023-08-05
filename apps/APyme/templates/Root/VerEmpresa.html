@@ -444,7 +444,7 @@
                                         {% for f in object.usuario_almacen.all %}
                                             <tr>
                                                 <td> {{ f.producto }}</td>
-                                                <td> {{ f.cantidad }}</td>
+                                                <td> {{ f.cantidad }} ({{ f.unidad }})</td>
                                                 <td> {{ f.precio }}</td>
                                                 <td>
                                                     <a href="{% url 'EditAlmacenRoot' f.id object.pk %}"
@@ -501,8 +501,10 @@
                                         {% for f in object.usuario_buscando.all %}
                                             <tr>
                                                 <td> {{ f.producto }}</td>
-                                                <td> {{ f.cantidad }}</td>
-                                                <td> {{ f.precio }}</td>
+                                                <td> {{ f.cantidad }}
+                                                    {{ f.unidad|default_if_none:'' }}
+                                                </td>
+                                                <td> {{ f.precio|default_if_none:0 }}</td>
                                                 <td>
                                                     <a href="{% url 'EditBuscandoRoot' f.id object.pk %}"
                                                        class="btn btn-warning btn-xs"><i

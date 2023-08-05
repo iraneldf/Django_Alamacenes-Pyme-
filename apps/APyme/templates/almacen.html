@@ -34,7 +34,7 @@
                     {% for f in object_list %}
                         <tr>
                             <td> {{ f.producto }}</td>
-                            <td> {{ f.cantidad }}</td>
+                            <td> {{ f.cantidad }} {{ f.unidad }} </td>
                             <td> {{ f.precio }}</td>
                             <td>
                                 <a href="{% url 'EditAlmacen' f.id %}" class="btn btn-warning btn-xs"><i

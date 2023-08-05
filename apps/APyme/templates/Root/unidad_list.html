@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    {% if messages %}
+
+
+        <div class="alert alert-danger alert-dismissible w-50 container mt-2">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h5><i class="icon fas fa-ban"></i> Error!</h5>
+            <ul class="messages">
+                {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+
+    {% endif %}
+
+
+
+
+    <div class="card w-50 container">
+        <div class="card-header">
+            <h3 class="card-title">Unidades de medida</h3>
+            <a href="{% url 'Crear_unidad' %}" class="btn btn-primary btn-sm float-right"><i
+                    class="fa fa-plus"></i>
+                Agregar una unidad</a>
+        </div>
+
+        <div class="card-body p-0">
+            <table class="table table-sm">
+                <thead>
+                <tr>
+
+                    <th style="width: 80%">Nombre</th>
+                    <th style="width: 20%">Operaciones</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                {% for u in unidades %}
+                    <tr>
+                        <td>{{ u.unidad }}</td>
+
+                        <td>
+                            <div class="mb-1">
+                                <a href="{% url 'Borrar_unidad' u.pk %}"
+                                   class="btn btn-xs btn-outline-danger float-right"><i
+                                        class="fa fa-trash-alt"></i></a>
+
+                                <a href="{% url 'Editar_unidad' u.pk %}"
+                                   class="btn btn-outline-warning btn-xs float-right"
+                                   style="margin-right:2px "><i
+                                        class="fa fa-edit"></i></a></div>
+                        </td>
+                    </tr>
+
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+{% endblock %}
